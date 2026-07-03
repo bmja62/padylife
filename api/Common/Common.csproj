@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+		<PackageReference Include="Ardalis.SmartEnum" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" />
+		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" />
+		<PackageReference Include="Microsoft.Extensions.Http" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+		<PackageReference Include="Pluralize.NET" />
+	
+	</ItemGroup>
+
+</Project>

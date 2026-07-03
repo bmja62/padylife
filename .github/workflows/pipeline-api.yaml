@@ -1,0 +1,132 @@
+name: Deploy Webapp to VPS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'
+
+env:
+  SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+  SERVER_HOST: "46.62.249.234"
+  SERVER_USER: "root"
+  BASE_PATH: "/mnt/appdata-volume"
+  DOMAIN_NAME: "padylife.ir"
+  PROD_SUBDOMAIN: "api"
+  STAGING_SUBDOMAIN: "staging-api"
+
+jobs:
+  determine-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      env_name: ${{ steps.set-env.outputs.env_name }}
+      env_url: ${{ steps.set-env.outputs.env_url }}
+      env_path: ${{ steps.set-env.outputs.env_path }}
+      timestamp: ${{ steps.timestamp.outputs.timestamp }}
+      upload_images_path: ${{ steps.set-env.outputs.upload_images_path }}
+
+    steps:
+      - id: set-env
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "env_name=production" >> $GITHUB_OUTPUT
+            echo "env_path=$BASE_PATH/$DOMAIN_NAME/$PROD_SUBDOMAIN" >> $GITHUB_OUTPUT
+            echo "env_url=https://$PROD_SUBDOMAIN.$DOMAIN_NAME" >> $GITHUB_OUTPUT
+            echo "upload_images_path=$BASE_PATH/storage/$DOMAIN_NAME/$PROD_SUBDOMAIN/UploadImages" >> $GITHUB_OUTPUT
+          elif [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            echo "env_name=staging" >> $GITHUB_OUTPUT
+            echo "env_path=$BASE_PATH/$DOMAIN_NAME/$STAGING_SUBDOMAIN" >> $GITHUB_OUTPUT
+            echo "env_url=https://$STAGING_SUBDOMAIN.$DOMAIN_NAME" >> $GITHUB_OUTPUT
+            echo "upload_images_path=$BASE_PATH/storage/$DOMAIN_NAME/$STAGING_SUBDOMAIN/UploadImages" >> $GITHUB_OUTPUT
+          else
+            echo "This ${GITHUB_REF} ref is not allowed for deployment. Exiting..."
+            exit 1
+          fi
+
+      - id: timestamp
+        run: echo "timestamp=$(date +%Y%m%d_%H%M%S)" >> $GITHUB_OUTPUT
+
+      - name: Output summary
+        run: |
+          echo "### 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment:** ${{ steps.set-env.outputs.env_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL:** [${{ steps.set-env.outputs.env_url }}](${{ steps.set-env.outputs.env_url }})" >> $GITHUB_STEP_SUMMARY
+          echo "- **Server Path:** \`${{ steps.set-env.outputs.env_path }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Release Timestamp:** ${{ steps.timestamp.outputs.timestamp }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Upload Images Path:** \`${{ steps.set-env.outputs.upload_images_path }}\`" >> $GITHUB_STEP_SUMMARY
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: determine-environment
+
+    environment:
+      name: ${{ needs.determine-environment.outputs.env_name }}
+      url: ${{ needs.determine-environment.outputs.env_url }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Publish
+        run: dotnet publish --configuration Release -o publish
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SERVER_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H $SERVER_HOST >> ~/.ssh/known_hosts
+
+      - name: Upload release to VPS
+        run: |
+          SERVER_PATH="${{ needs.determine-environment.outputs.env_path }}"
+          TIMESTAMP="${{ needs.determine-environment.outputs.timestamp }}"
+          
+          ssh -i ~/.ssh/id_ed25519 $SERVER_USER@$SERVER_HOST "mkdir -p $SERVER_PATH/releases/$TIMESTAMP"
+
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            publish/ $SERVER_USER@$SERVER_HOST:$SERVER_PATH/releases/$TIMESTAMP
+
+      - name: Update current symlink
+        run: |
+          SERVER_PATH="${{ needs.determine-environment.outputs.env_path }}"
+          UPLOAD_IMAGES_PATH="${{ needs.determine-environment.outputs.upload_images_path }}"
+          TIMESTAMP="${{ needs.determine-environment.outputs.timestamp }}"
+
+          ssh -i ~/.ssh/id_ed25519 $SERVER_USER@$SERVER_HOST \
+            "ln -sfn $SERVER_PATH/releases/$TIMESTAMP $SERVER_PATH/current"
+
+          ssh -i ~/.ssh/id_ed25519 $SERVER_USER@$SERVER_HOST \
+            "ln -sfn $UPLOAD_IMAGES_PATH $SERVER_PATH/releases/$TIMESTAMP/wwwroot/UploadImages"
+
+      - name: Reload services
+        run: |
+          ssh -i ~/.ssh/id_ed25519 $SERVER_USER@$SERVER_HOST << 'EOF'
+            if [ "${{ needs.determine-environment.outputs.env_name }}" = "production" ]; then
+              sudo systemctl daemon-reload
+              sudo systemctl stop api-padylife.service
+              sudo systemctl start api-padylife.service
+              sudo systemctl enable api-padylife.service
+              sudo systemctl status api-padylife.service
+            else
+              sudo systemctl daemon-reload
+              sudo systemctl stop staging-api-padylife.service
+              sudo systemctl start staging-api-padylife.service
+              sudo systemctl enable staging-api-padylife.service
+              sudo systemctl status staging-api-padylife.service
+            fi
+            sudo systemctl reload nginx
+          EOF

@@ -1,0 +1,2399 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PadyLife.Api</name>
+    </assembly>
+    <members>
+        <member name="T:PadyLife.Api.Controllers.v1.AddressesController">
+            <summary>
+            کنترلر آدرس ها
+            </summary>
+            <param name="addressRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.AddressesController.#ctor(Data.Contracts.IRepository{Entities.Addresses.ECommerce.Entities.Address},AutoMapper.IMapper)">
+            <summary>
+            کنترلر آدرس ها
+            </summary>
+            <param name="addressRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.BasketController">
+            <summary>
+            کنترلر سبد خرید
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BasketController.GetOrCreateBasket(System.Int64)">
+            <summary>
+            مشاهده سبد خرید کاربر
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BasketController.AddItem(System.Int64,Application.Baskets.DTOs.AddBasketItemDTO)">
+            <summary>
+            افزودن آیتم به سبد خرید
+            </summary>
+            <param name="userId"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BasketController.UpdateItemQuantity(Application.Baskets.DTOs.UpdateBasketItemQuantityCommandDTO)">
+            <summary>
+            ویرایش تعداد آیتم در سبد خرید
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BasketController.RemoveItem(Application.Baskets.DTOs.RemoveItemFromBasketCommandDTO)">
+            <summary>
+            حذف آیتم از سبد خرید
+            </summary>
+            <param name="userId"></param>
+            <param name="itemId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BasketController.GetHistory(System.Int64)">
+            <summary>
+            مشاهده تاریخچه تغییرات سبد خرید
+            </summary>
+            <param name="basketId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BasketController.BasketToOrder(Application.Baskets.DTOs.BasketToOrderDTO)">
+            <summary>
+            تبدیل سبد به سفارش
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BasketController.GetBasketItemDetailsAsProduct(Application.Baskets.Queries.GetBasketItemDetailsQuery)">
+            <summary>
+            دریافت جزئیات سبد مربوط به محصولات
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.BlogCategoriesController">
+            <summary>
+            کنترلر دسته بندی بلاگ
+            </summary>
+            <param name="cityRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BlogCategoriesController.#ctor(Data.Contracts.IRepository{Entities.Blogs.BlogCategory},AutoMapper.IMapper)">
+            <summary>
+            کنترلر دسته بندی بلاگ
+            </summary>
+            <param name="cityRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.BlogController">
+            <summary>
+            کنترلر بلاگ
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BlogController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر بلاگ
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BlogController.Create(Application.Blogs.DTO.CreateBlogCommandDTO)">
+            <summary>
+            ساخت بلاگ
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BlogController.Update(Application.Blogs.DTO.UpdateBlogCommandDTO)">
+            <summary>
+            ویرایش بلاگ
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BlogController.Delete(System.Int64,System.String)">
+            <summary>
+            حذف بلاگ
+            </summary>
+            <param name="id"></param>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BlogController.GetBy(System.Int64)">
+            <summary>
+            گرفتن بلاگ
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BlogController.GetAll(Common.GridResults.GlobalGrid,System.String,System.Nullable{System.Int64})">
+            <summary>
+            لیست بلاگ ها
+            </summary>
+            <param name="input"></param>
+            <param name="searchByTitle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BlogController.GetBySeoURL(System.String)">
+            <summary>
+            گرفتن بلاگ با سو یوآرال
+            </summary>
+            <param name="input"></param>
+            <param name="seoURL"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BlogController.GetAllForWeb(Common.GridResults.GlobalGrid,System.String,System.Nullable{System.Int64})">
+            <summary>
+             لیست بلاگ ها برای کلاینت
+            </summary>
+            <param name="input"></param>
+            <param name="search"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.BlogController.CreateOrUpdateRelatedBlog(System.Int64,System.Collections.Generic.List{System.Int64})">
+            <summary>
+            ساخت یا ویرایش بلگ ها مرتبط
+            </summary>
+            <param name="blogId"></param>
+            <param name="relatedIds"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.CalendarManagerController">
+            <summary>
+            کنترلر تقویم
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CalendarManagerController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر تقویم
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CalendarManagerController.GetMonth(Application.Calenders.Dtos.GetMonthCalendarRequestDto)">
+            <summary>
+            دریافت گرید ماه شمسی (۵ هفته/۳۵ روز) به همراه مناسبت‌ها و رویدادهای کاربر (در صورت لاگین بودن)
+            </summary>
+            <param name="input">پارامترهای سال/ماه شمسی</param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CalendarManagerController.GetEventsByDay(System.DateTime)">
+            <summary>
+            دریافت رویدادهای کاربر در یک روز مشخص
+            </summary>
+            <param name="date">تاریخ میلادی (فقط بخش Date خوانده می‌شود)</param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CalendarManagerController.CreateEvent(Application.Calenders.Dtos.CreateCalendarEventDto)">
+            <summary>
+            ایجاد رویداد جدید برای کاربر جاری
+            </summary>
+            <param name="input">اطلاعات رویداد</param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CalendarManagerController.UpdateEvent(Application.Calenders.Dtos.UpdateCalendarEventDto)">
+            <summary>
+            ویرایش رویداد کاربر جاری
+            </summary>
+            <param name="input">اطلاعات ویرایش رویداد</param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CalendarManagerController.DeleteEvent(System.Int64)">
+            <summary>
+            حذف نرم (Soft Delete) رویداد کاربر جاری
+            </summary>
+            <param name="id">شناسه‌ی رویداد</param>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.ChallengesController">
+            <summary>
+            کنترلر چالش ها
+            </summary>
+            <param name="challengeRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ChallengesController.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Data.Contracts.IRepository{Entities.Users.User},Data.Contracts.IRepository{Entities.Challange.Challange},AutoMapper.IMapper)">
+            <summary>
+            کنترلر چالش ها
+            </summary>
+            <param name="challengeRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ChallengesController.GetAllByFilter(System.Int32,System.Int32,System.String,System.Nullable{Entities.Challange.ChallengeType},System.Nullable{System.Boolean},System.Threading.CancellationToken)">
+            <summary>
+            دریافت چالش ها با فیلتر
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="count"></param>
+            <param name="search"></param>
+            <param name="type"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ChallengesController.JoinChallenge(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            پیوستن به چالش
+            </summary>
+            <param name="challengId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ChallengesController.GetChallengesByToken(Common.GridResults.GlobalGrid,System.Threading.CancellationToken)">
+            <summary>
+            چالش های من
+            </summary>
+            <param name="globalGrid"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.ChatController">
+            <summary>
+            چت ها
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ChatController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            چت ها
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ChatController.GetAllChatForAdmin(Application.Chats.Dto.GetAllChatRequestDto)">
+            <summary>
+            لیست تمام چت ها
+            </summary>
+            <param name="Dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ChatController.GetChatByIdQueryForAdmin(Application.Chats.Dto.ChatByIdRequestDto)">
+            <summary>
+            پیام های چت انتخابی
+            </summary>
+            <param name="Dto"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.CitiesController">
+            <summary>
+            کنترلر شهرها
+            </summary>
+            <param name="cityRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CitiesController.#ctor(Data.Contracts.IRepository{Entities.Locations.City},AutoMapper.IMapper)">
+            <summary>
+            کنترلر شهرها
+            </summary>
+            <param name="cityRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.CommentsController">
+            <summary>
+            کنترلر کامنت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CommentsController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر کامنت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CommentsController.Create(Services.Services.CommentServices.DTOs.CreateCommentDTO)">
+            <summary>
+            ثبت کامنت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CommentsController.Reply(Services.Services.CommentServices.DTOs.CreateCommentDTO)">
+            <summary>
+            ریپلای به کامنت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CommentsController.Delete(System.Int64)">
+            <summary>
+            حذف کامنت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CommentsController.Edit(Application.Comments.DTOs.EditCommentDTO)">
+            <summary>
+            ویرایش کامنت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CommentsController.Approve(System.Int64)">
+            <summary>
+            تایید کامنت توسط ادمین
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CommentsController.ReactToComment(System.Int64,Application.Comments.DTOs.ReactionDTO)">
+            <summary>
+            واکنش به کامنت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CommentsController.GetEntityComments(System.Nullable{System.Int64},System.Nullable{System.Boolean},Entities.Common.EntityType,Common.GridResults.GlobalGrid)">
+            <summary>
+            دریافت لیست کامنت‌های یک انتیتی
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CommentsController.GetEntityCommentsForAdmin(System.Nullable{System.Int64},System.Nullable{System.Boolean},System.Nullable{Entities.Common.EntityType},Common.GridResults.GlobalGrid)">
+            <summary>
+            دریافت لیست کامنت‌های یک انتیتی
+            </summary>
+            <param name="entityId"></param>
+            <param name="isApproved"></param>
+            <param name="entityType"></param>
+            <param name="globalGrid"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.CountriesController">
+            <summary>
+            کنترلر کشور ها
+            </summary>
+            <param name="countryRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.CountriesController.#ctor(Data.Contracts.IRepository{Entities.Locations.Country},AutoMapper.IMapper)">
+            <summary>
+            کنترلر کشور ها
+            </summary>
+            <param name="countryRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.DailyFeelingsController">
+            <summary>
+            کنترلر احساسات روزانه
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DailyFeelingsController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر احساسات روزانه
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DailyFeelingsController.Create(Application.DailyFeelings.DTOs.CreateDailyFeelingCommandDTO)">
+            <summary>
+            ساخت احساسات
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.DashboardController">
+            <summary>
+            کنترلر گزارش‌های جامع سیستم
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DashboardController.GetSystemSummary">
+            <summary>
+            دریافت آمار کلی سیستم
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DashboardController.GetSalesReport">
+            <summary>
+            دریافت گزارش فروش روزانه، هفتگی و ماهانه
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DashboardController.GetUsersReport">
+            <summary>
+            دریافت آمار کاربران و متخصصین
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DashboardController.GetWeeklySalesTrend">
+            <summary>
+            دریافت روند فروش هفته جاری
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DashboardController.GetTopProducts(Application.Dashboard.Queries.GetTopProductsQuery)">
+            <summary>
+            دریافت محصولات پرفروش
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.DiscountsController">
+            <summary>
+            کنترلر کد تخفیف
+            </summary>
+            <param name="discountRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DiscountsController.#ctor(Data.Contracts.IRepository{Entities.Discounts.Discount},AutoMapper.IMapper)">
+            <summary>
+            کنترلر کد تخفیف
+            </summary>
+            <param name="discountRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.DynamicSiteSettingController">
+            <summary>
+            کنترلر تنظیمات داینامیک سایت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DynamicSiteSettingController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر تنظیمات داینامیک سایت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DynamicSiteSettingController.Create(Application.DynamicSiteSettings.DTO.CreateDynamicSiteSettingDTO)">
+            <summary>
+            ایجاد تنظیم داینامیک
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DynamicSiteSettingController.Update(Application.DynamicSiteSettings.DTO.UpdateDynamicSiteSettingDTO)">
+            <summary>
+            ویرایش تنظیم داینامیک
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DynamicSiteSettingController.Delete(System.Int64)">
+            <summary>
+            حذف تنظیم داینامیک
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DynamicSiteSettingController.GetById(System.Int64)">
+            <summary>
+            دریافت با شناسه
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DynamicSiteSettingController.GetByTypeAndKey(System.String,System.String)">
+            <summary>
+            دریافت با نوع و کلید
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.DynamicSiteSettingController.GetAllByType(Application.DynamicSiteSettings.DTO.GetAllDynamicSiteSettingsByTypeRequestDto)">
+            <summary>
+            دریافت همه تنظیمات یک نوع
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.ExcersiesController">
+            <summary>
+            کنترلر تمرینات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ExcersiesController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر تمرینات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ExcersiesController.Create(Application.Excersies.DTOs.CreateExcersiesCommandDTO)">
+            <summary>
+            ساخت تمرین
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ExcersiesController.Update(Application.Excersies.DTOs.UpdateExcersiesCommandDTO)">
+            <summary>
+            ساخت تمرین
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ExcersiesController.AddStepToExcersie(Application.Excersies.DTOs.AddOrRemoveStepToOrFromExcersiesCommandDTO)">
+            <summary>
+            افزودن مرحله به تمرین
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ExcersiesController.RemoveStepFromExcersie(Application.Excersies.DTOs.AddOrRemoveStepToOrFromExcersiesCommandDTO)">
+            <summary>
+            حذف مرحله از تمرین
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ExcersiesController.GetAll(Common.GridResults.GlobalGrid)">
+            <summary>
+            دریافت تمرینات
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ExcersiesController.Get(System.Int64)">
+            <summary>
+            دریافت تمرین
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ExcersiesController.Delete(System.Int64)">
+            <summary>
+            دریافت تمرین
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.ExerciseCategoriesController">
+            <summary>
+            دسته بندی تمرینات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ExerciseCategoriesController.#ctor(Data.Contracts.IRepository{Entities.Excersies.ExerciseCategory},AutoMapper.IMapper)">
+            <summary>
+            دسته بندی تمرینات
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.InventoryController">
+            <summary>
+            کنترلر موجودی
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.InventoryController.IncreaseStock(Application.Inventories.DTOs.AdjustStockDTO)">
+            <summary>
+            افزایش موجودی
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.InventoryController.DecreaseStock(Application.Inventories.DTOs.AdjustStockDTO)">
+            <summary>
+            کاهش موجودی
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.InventoryController.TransferStock(Application.Inventories.DTOs.TransferStockDTO)">
+            <summary>
+            انتقال موجودی بین انبارها
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.InventoryController.ReserveStock(Application.Inventories.DTOs.ReserveStockDTO)">
+            <summary>
+            رزرو موجودی
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.InventoryController.ReleaseStock(Application.Inventories.DTOs.ReleaseStockDTO)">
+            <summary>
+            آزادسازی موجودی رزرو شده
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.InventoryController.GetHistory(System.Int64,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            دریافت تاریخچه تراکنش‌های موجودی
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.InventoryController.GetLowStockItems(System.Nullable{System.Int64})">
+            <summary>
+            دریافت لیست کالاهای با موجودی کم
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.LeaderboardController">
+            <summary>
+            کنترلر رهبران
+            </summary>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.LeaderboardController.#ctor(Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر رهبران
+            </summary>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.LeaderboardController.GetLeaderboard(Application.Plans.Queries.GetLeaderboardQuery)">
+            <summary>
+            دریافت لیدربرد
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.LeaderboardController.GetExpertLeaderboard(Application.Plans.Queries.GetExpertLeaderboardQuery)">
+            <summary>
+            دریافت لیدربرد کارشناس
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.LeaderboardController.GetPlanLeaderboard(Application.Plans.DTOs.GetPlanLeaderboardQueryDTO)">
+            <summary>
+            دریافت لیدربرد کاربران در یک پلن خاص
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.LeaderboardController.GetPlanLeaderboardStats(System.Int64)">
+            <summary>
+            وضعیت پلن فرد
+            </summary>
+            <param name="planId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.LeaderboardController.GetMyPlanLeaderboards">
+            <summary>
+            لیدر بورد شخصی
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.MedalsController">
+            <summary>
+            کنترلر مدال ها
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.MedalsController.GetAll(System.Int32,System.Int32)">
+            <summary>
+            دریافت تمامی مدال ها
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.NotificationsController">
+            <summary>
+            نوتیفیکیشن
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.NotificationsController.SendNotification(Services.Services.NotificationServices.DTOs.CreateNotificationDTO)">
+            <summary>
+            ارسال پیام
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.NotificationsController.GetSystemNotificationByUserId(System.Nullable{System.Int64},Common.GridResults.GlobalGrid,System.Nullable{System.Boolean})">
+            <summary>
+            دریافت پیام های سیستمی
+            </summary>
+            <param name="userId"></param>
+            <param name="globalGrid"></param>
+            <param name="isFromSystem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.NotificationsController.GetUserSystemNotificationsForUI(System.Int64,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            دریافت پیام های سیستمی برای UI
+            </summary>
+            <param name="userId"></param>
+            <param name="pageNumber"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.NotificationsController.MarkAsRead(Services.Services.NotificationServices.DTOs.MarkAsReadDTO)">
+            <summary>
+            تایید به عنوان خوانده شده
+            </summary>
+            <param name="markAsRead"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.OnlineUsersController">
+            <summary>
+            کاربران حاضر
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.OrdersController">
+            <summary>
+            کنترلر سفارشات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.OrdersController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher,Services.Services.PdfServices.IPdfService)">
+            <summary>
+            کنترلر سفارشات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.OrdersController.GetOrders(Application.Orders.Queries.GetOrdersQuery)">
+            <summary>
+            دریافت لیست سفارشات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.OrdersController.GetOrderDetails(System.Int64)">
+            <summary>
+            دریافت جزئیات سفارش
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.OrdersController.ChangeStatus(System.Int64,Application.Orders.DTOs.UpdateOrderStatusDTO)">
+            <summary>
+            تغییر وضعیت سفارش توسط ادمین
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.OrdersController.GetInvoicePdf(System.Int64)">
+            <summary>
+            دریافت فایل PDF فاکتور سفارش
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.OrdersController.CancelOrder(System.Int64,System.Int64)">
+            <summary>
+            کنسل کردن سفارش (با اصلاح موجودی)
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.OrdersController.DeleteOrder(System.Int64,System.Int64)">
+            <summary>
+            حذف سفارش (با اصلاح موجودی)
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.PaymentsController">
+            <summary>
+            پرداخت ها
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PaymentsController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            پرداخت ها
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PaymentsController.GetPayments(Common.GridResults.GlobalGrid,System.Nullable{System.Boolean},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int64})">
+            <summary>
+            لیست پرداخت ها
+            </summary>
+            <param name="input"></param>
+            <param name="isPayed"></param>
+            <param name="userFullName"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PaymentsController.GetMyPayments(Common.GridResults.GlobalGrid,System.Nullable{System.Boolean},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            لیست پرداخت ها
+            </summary>
+            <param name="input"></param>
+            <param name="isPayed"></param>
+            <param name="userFullName"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PaymentsController.PayWithWallet(System.Int64)">
+            <summary>
+            پرداخت با کیف پول
+            </summary>
+            <param name="OrderId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PaymentsController.Verify(System.Int64)">
+            <summary>
+            وریفای پرداخت
+            </summary>
+            <param name="trackId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.PlanCategoriesController">
+            <summary>
+            دسته بندی پلن
+            </summary>
+            <param name="planCategoryRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlanCategoriesController.#ctor(Data.Contracts.IRepository{Entities.Plans.PlanCategory},AutoMapper.IMapper)">
+            <summary>
+            دسته بندی پلن
+            </summary>
+            <param name="planCategoryRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.PlansController">
+            <summary>
+            کنترلر پلن
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر پلن
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.CreateOrUpdate(Application.Plans.Commands.CreateOrUpdatePlanCommandDTO)">
+            <summary>
+            ساخت پلن
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.AddPlanQuestionToPlan(Application.Plans.DTOs.AddPlanQuestionToPlanCommandDTO)">
+            <summary>
+            افزودن سوالات به پلن
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.CreateOrUpdateLinkedQuestion(Application.Questions.DTOs.CreateOrUpdateLinkedQuestionCommandDTO)">
+            <summary>
+            تنظیمات لینک بندی سوالات
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.Get(System.Int64)">
+            <summary>
+            دریافت پلن
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlanAnswersRequest(Application.Plans.DTOs.GetPlanAnswersRequest)">
+            <summary>
+            دریافت پاسخ ها
+            </summary>
+            <param name="Dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlanExerciseAnswers(Application.Plans.DTOs.GetPlanExerciseAnswersRequest)">
+            <summary>
+            دریافت پاسخ های مراحل
+            </summary>
+            <param name="Dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlansHaveAnswer(Application.Plans.DTOs.GetPlansHaveAnswerDto)">
+            <summary>
+            پلن های دارای پاسخ
+            </summary>
+            <param name="Dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlanQuestionsByPlanId(System.Int64,Common.GridResults.GlobalGrid)">
+            <summary>
+            دریافت سوالات پلن
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetAll(Application.Plans.DTOs.GetAllPlanFilter)">
+            <summary>
+            دریافت پلن
+            </summary>
+            <param name="globalGrid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetAllForUI(Common.GridResults.GlobalGrid,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int64})">
+            <summary>
+            دریافت پلن کلاینت
+            </summary>
+            <param name="globalGrid"></param>
+            <param name="containUserPlans"></param>
+            <param name="containSginUpPlans"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.AddPlanQuestion(Application.Plans.DTOs.AddPlanQuestionDTO)">
+            <summary>
+            افزودن سوال به پلن
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.RemovePlanQuestion(System.Int64)">
+            <summary>
+            حذف سوال از پلن
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.AssginPlanToUser(System.Int64,System.Int64)">
+            <summary>
+            اتصال شخص به پلن
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.CreateUserPlanAnswer(Application.Plans.DTOs.CreateUserPlanAnswerDTO)">
+            <summary>
+            ثبت پاسخ کاربر
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.CompletedUserExercise(Application.Plans.Commands.CompletedUserExerciseCommand)">
+            <summary>
+            اتمام تمرین پلن فرد
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetAnswerDistribution(Application.Plans.Queries.GetAnswerDistributionQuery)">
+            <summary>
+            درصد انتخاب گزینه‌های هر سوال
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetUserPlanCompanions(Application.Plans.DTOs.GetUserPlanCompanionsRequestDto)">
+            <summary>
+            دریافت لیست همراهان یک پلن
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.DeleteUserPlanCompanion(Application.Plans.Commands.DeleteUserPlanCompanionCommand)">
+            <summary>
+            حذف یک همراه از پلن
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetSimilarUsers(Application.Plans.Queries.GetSimilarUsersQuery)">
+            <summary>
+            دریافت کاربران مشابه با من بر اساس پاسخ‌ها
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlanFlow(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            دریافت فلو پلن
+            </summary>
+            <param name="planId"></param>
+            <param name="currentPlanQuestionId"></param>
+            <param name="selectedQuestionOptionId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetNextUnansweredQuestion(System.Int64,System.Int64)">
+            <summary>
+            دریافت اخرین سوال پاسخ نداده شده پلن فرد
+            </summary>
+            <param name="planId"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.Delete(System.Int64)">
+            <summary>
+            حذف پلن
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.ChangePlanStatus(System.Int64,Entities.Plans.Plan.PlanStatus)">
+            <summary>
+            تغییر وضعیت
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetSignUpPlan">
+            <summary>
+            دریافت پلن اکتور بعد از ثبت نام
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.ToogleIsSginUpPlan(System.Int64)">
+            <summary>
+            تغییر پلن به پلن بعد از ثبت نام
+            </summary>
+            <param name="planId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetUserPlansStatus(System.Int64,Common.GridResults.GlobalGrid,System.Nullable{System.Int64})">
+            <summary>
+            دریافت پلن های کاربر
+            </summary>
+            <param name="planId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetUserPlanExercises(Application.Plans.DTOs.GetUserPlanExercisesInput)">
+            <summary>
+            دریافت پلن های کاربر
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.AddExpertToUserPlan(Application.Plans.DTOs.CreateUserPlanExpertCommandDTO)">
+            <summary>
+            افزودن متخصص به پلن کاربر و ایجاد چت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.AddCompanion(Application.Plans.DTOs.AddUserPlanCompanionCommandDTO)">
+            <summary>
+            افزودن همراه به پلن کاربر و ایجاد چت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.SetPlanPrice(Application.Plans.Commands.SetExpertPlanPriceCommand)">
+            <summary>
+            قیمت گذاری متخصص برای هر پلن
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.DiactiveExpertPlanByExpert(Application.Plans.Commands.DiactiveExpertPlanByExpertCommand)">
+            <summary>
+            غیرفعال سازی متخصص برای هر پلن
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetExpertsThatPeresentPlanId(Application.Plans.Queries.GetExpertsThatPeresentPlanIdQuery)">
+            <summary>
+            متخصصین یک پلن خاص که همراه کاربران هستند
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetUsersThatAlreadyInPlanId(Application.Plans.Queries.GetUsersThatAlreadyInPlanIdQuery)">
+            <summary>
+            کاربرانی که در پلن شرکت کرده اند
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetAllPlanPrices(Common.GridResults.GlobalGrid,System.Nullable{System.Int64})">
+            <summary>
+            لیست قیمت متخصصین برای پلن ها
+            </summary>
+            <param name="globalGrid"></param>
+            <param name="planId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetAllPlanPricesForUI(Common.GridResults.GlobalGrid,System.Nullable{System.Boolean},System.Nullable{System.Int64},System.Nullable{System.Boolean})">
+            <summary>
+            در سمت کلاینت لیست قیمت متخصصین برای پلن ها
+            </summary>
+            <param name="globalGrid"></param>
+            <param name="planId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlanPrice(System.Int64,System.Nullable{System.Boolean})">
+            <summary>
+            دریافت قیمت متخصص با شناسه
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlanPriceForUI(System.Int64,System.Int64,System.Nullable{System.Boolean})">
+            <summary>
+            دریافت قیمت متخصص با شناسه
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlanStartStats(System.Int64)">
+            <summary>
+            تعداد افرادی که همزمان با من وارد این پلن شدن
+            </summary>
+            <param name="UserPlanId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetExpertCompanionsCount(System.Int64,System.Nullable{System.Boolean})">
+            <summary>
+            دریافت تعداد همراهی های متخصص
+            </summary>
+            <param name="expertId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlanSubscribers(System.Int64,Common.GridResults.GlobalGrid,System.Nullable{System.Boolean})">
+            <summary>
+            دریافت شرکت کنندگان این پلن
+            </summary>
+            <param name="planId"></param>
+            <param name="globalGrid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.CompleteUserPlan(System.Int64)">
+            <summary>
+            اتمام پلن
+            </summary>
+            <param name="planId"></param>
+            <param name="globalGrid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.CreatePlanRelation(Application.PlanRelations.DTOs.CreatePlanRelationDto)">
+            <summary>
+            ایجاد رابطه بین دو پلن (با اوردر)
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.UpdatePlanRelation(Application.PlanRelations.DTOs.UpdatePlanRelationDto)">
+            <summary>
+            بروزرسانی اوردر رابطه بین دو پلن
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.DeletePlanRelation(Application.PlanRelations.DTOs.DeletePlanRelationDto)">
+            <summary>
+            حذف رابطه بین دو پلن
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlanRelations(System.Int64)">
+            <summary>
+            دریافت پلن به همراه پلن‌های قبلی و بعدی آن
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.SetPlanDiscount(Application.Plans.DTOs.SetPlanDiscountDTO)">
+            <summary>
+            ثبت تخفیف رو پلن
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetPlanDiscount(System.Int64)">
+            <summary>
+            دریافت تخفیف پلن
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PlansController.GetUserPlans(System.Int64,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean})">
+            <summary>
+            دریافت پلن های کاربر
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.PointsController">
+            <summary>
+            کنترلر امتیازات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PointsController.GetUserPoints(System.Int64)">
+            <summary>
+            دریافت امتیاز کاربر
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PointsController.EarnPoints(Application.Points.DTOs.EarnPointsRequest)">
+            <summary>
+            افزایش امتیاز
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PointsController.ConsumePoints(Application.Points.DTOs.ConsumePointsRequest)">
+            <summary>
+            مصرف امتیاز
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PointsController.ConvertPointsToWalletCredit(Application.Points.DTOs.ConvertPointsToWalletCreditRequest)">
+            <summary>
+            تبدیل امتیاز به پول
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PointsController.PointsReport(Application.Points.Queries.PointsReportQuery)">
+            <summary>
+             گزارش حرفه‌ای امتیاز کاربر + مقایسه
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.PointsController.MyPointsSummary(Application.Points.Queries.MyPointsSummaryQuery)">
+            <summary>
+             گزارش هفتگی ، ماهانه ، سالیانه
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.ProductAttributesController">
+            <summary>
+            ویژگی های محصول
+            </summary>
+            <param name="productAttributeRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductAttributesController.#ctor(Data.Contracts.IRepository{Entities.Products.ProductAttribute},AutoMapper.IMapper)">
+            <summary>
+            ویژگی های محصول
+            </summary>
+            <param name="productAttributeRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.ProductCategoriesController">
+            <summary>
+            دسته بندی محصولات
+            </summary>
+            <param name="productCategoryRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductCategoriesController.#ctor(Data.Contracts.IRepository{Entities.Products.ProductCategory},AutoMapper.IMapper)">
+            <summary>
+            دسته بندی محصولات
+            </summary>
+            <param name="productCategoryRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.ProductsController">
+            <summary>
+            محصولات
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            محصولات
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.ChangeMainImage(Application.Products.DTOs.ChangeMainImageDTO)">
+            <summary>
+            تغییر عکس اصلی محصول
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.AddImageToGallery(Application.Products.DTOs.AddImageToGalleryDTO)">
+            <summary>
+            افزودن عکس به گالری محصول
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.Update(System.Int64,Application.Products.DTOs.UpdateProductCommandDTO)">
+            <summary>
+            ویرایش محصول
+            </summary>
+            <param name="id"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.Delete(System.Int64)">
+            <summary>
+             حذف محصول
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.GetById(System.Int64)">
+            <summary>
+            دریافت محصول
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.GetAll(Application.Products.DTOs.GetAllProductsQueryDTO)">
+            <summary>
+            دریافت محصولات
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.AddProductAttributeValue(Application.Products.DTOs.AddProductAttributeValueDTO)">
+            <summary>
+            افزودن ویژگی‌های عمومی محصول
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.RemoveProductAttributeValue(Application.Products.DTOs.RemoveProductAttributeValueDTO)">
+            <summary>
+            حذف ویژگی‌های عمومی محصول ساده
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.RemoveVariantAttributeValue(Application.Products.DTOs.RemoveVariantAttributeValueDTO)">
+            <summary>
+             حذف ویژگی‌های عمومی محصول متغییر
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.CreateBasic(Application.Products.DTOs.CreateProductBasicInfoDTO)">
+            <summary>
+            مرحله 1: ایجاد محصول پایه
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.AddAttributes(System.Int64,System.Collections.Generic.List{Application.Products.DTOs.ProductAttributeValueDTO})">
+            <summary>
+            مرحله 2: افزودن ویژگی‌ها
+            </summary>
+            <param name="productId"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.SetPricing(System.Int64,Application.Products.DTOs.SetProductPricingDTO)">
+            <summary>
+            مرحله 3: قیمت‌گذاری
+            </summary>
+            <param name="productId"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProductsController.AddVariants(System.Int64,System.Collections.Generic.List{Application.Products.DTOs.CreateProductVariantDTO})">
+            <summary>
+            مرحله 4: افزودن واریانت‌ها (برای محصولات متغیر)
+            </summary>
+            <param name="productId"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.ProvincesController">
+            <summary>
+            کنترلر استان ها
+            </summary>
+            <param name="provinceRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ProvincesController.#ctor(Data.Contracts.IRepository{Entities.Locations.Province},AutoMapper.IMapper)">
+            <summary>
+            کنترلر استان ها
+            </summary>
+            <param name="provinceRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.QuestionCategoriesController">
+            <summary>
+            دسته بندی سوالات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionCategoriesController.#ctor(Data.Contracts.IRepository{Entities.Questions.QuestionCategory},AutoMapper.IMapper)">
+            <summary>
+            دسته بندی سوالات
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.QuestionsController">
+            <summary>
+            کنترلر بانک سوالات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionsController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر بانک سوالات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionsController.Create(Application.Questions.DTOs.CreateQuestionCommandDTO)">
+            <summary>
+            ساخت سوال
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionsController.GetAll(Application.Questions.DTOs.GetAllFilterDTO)">
+            <summary>
+            لیست سوالات
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionsController.GetBy(System.Int64)">
+            <summary>
+            دریافت سوال
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionsController.Update(System.Int64,Application.Questions.DTOs.UpdateQuestionDTO)">
+            <summary>
+            ویرایش سوال
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionsController.Delete(System.Int64)">
+            <summary>
+            حذف سوال
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionsController.AddQuestionOptionToQuestion(Application.Questions.DTOs.AddQuestionOptionToQuestionDTO)">
+            <summary>
+            افزودن پاسخ به سوال
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionsController.RemoveQuestionOptionToQuestion(System.Int64)">
+            <summary>
+            افزودن پاسخ به سوال
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionsController.UpdateQuestionOptionLinkeds(Application.Questions.DTOs.UpdateQuestionOptionLinkedsDTO)">
+            <summary>
+            ویرایش اتصالات پاسخ یک سوال
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.QuestionsController.UpdateQuestionOption(Application.Questions.DTOs.UpdateQuestionOptionDTO)">
+            <summary>
+            ویرایش اتصالات پاسخ یک سوال
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.RatesController">
+            <summary>
+            کنترلر ستاره
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.RatesController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر ستاره
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.RatesController.Create(Services.Services.CommentServices.DTOs.CreateRateDTO)">
+            <summary>
+            ساخت ستاره
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.RatesController.Update(System.Int64,System.Int64,Entities.Common.EntityType,Services.Services.RateServices.DTOs.UpdateRateDTO)">
+            <summary>
+            ویرایش ستاره
+            </summary>
+            <param name="userId"></param>
+            <param name="entityId"></param>
+            <param name="entityType"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.RatesController.GetAverageRating(System.Int64,Entities.Common.EntityType)">
+            <summary>
+            دریافت میانگین ستاره
+            </summary>
+            <param name="entityId"></param>
+            <param name="entityType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.RatesController.IsRateExist(System.Int64,Entities.Common.EntityType)">
+            <summary>
+            ایا قبلا ستاره داده ام؟
+            </summary>
+            <param name="entityId"></param>
+            <param name="entityType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.ReportController">
+            <summary>
+            کنترلر گزارشات
+            </summary>
+            <param name="queryDispatcher"></param>
+            <param name="accessor"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.#ctor(Application.Cqrs.Queris.IQueryDispatcher,Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            کنترلر گزارشات
+            </summary>
+            <param name="queryDispatcher"></param>
+            <param name="accessor"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.GetMyPlanChartStats">
+            <summary>
+            نمودار پلن های فرد
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.GetPerformanceChart(System.Int32,Application.Reports.Queries.PerformanceGroupingType)">
+            <summary>
+            نمودار پیشرفت
+            </summary>
+            <param name="periods"></param>
+            <param name="grouping"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.GetGroupPerformanceChart(Application.Reports.Queries.GetGroupPerformanceChartQuery)">
+            <summary>
+            نمودار پیشرفت گروهی
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.GetTeamPerformanceChart(Application.Reports.Queries.GetTeamPerformanceChartQuery)">
+            <summary>
+            گزارش پیشرفت تیمی
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.AutoGeneratePlanTeamChart(Application.Reports.Queries.AutoGeneratePlanTeamChartQuery)">
+            <summary>
+            ساخت نمودار بر اساس برترین پلن
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.GenerateTeamRankings(Application.Reports.Queries.GenerateTeamRankingsQuery)">
+            <summary>
+            ساخت تیم رنکینگ اتومات
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.GetCourseProgressReport(Application.Reports.Queries.GetCourseProgressReportQuery)">
+            <summary>
+            گزارش پیشرفت دوره
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.GetWeeklyCommitmentReport(Application.Reports.Queries.GetWeeklyCommitmentReportQuery)">
+            <summary>
+            گزارش تعهد به برنامه
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.GetWeeklyFeelingsReport(Application.Reports.Queries.GetWeeklyFeelingsReportQuery)">
+            <summary>
+            گزارش هفتگی احساسات
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.GetUserActivityReport(Application.Reports.Queries.GetUserActivityReportQuery)">
+            <summary>
+             گزارش فعالیت‌های کاربر
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.ReportController.GetUserActivityForAllQuestionsReport(Application.Reports.Queries.GetUserActivityForAllQuestionsReportQuery)">
+            <summary>
+             گزارش فعالیت‌های کاربر
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.StepOptionController">
+            <summary>
+            کنترلر گزینه‌های گام تمرین
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.StepOptionController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر گزینه‌های گام تمرین
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.StepOptionController.CreateVideo(Application.StepOptions.DTOs.CreateVideoStepOptionCommandDTO)">
+            <summary>
+            ساخت پاسخ ویدیویی
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.StepOptionController.CreateMultipleChoice(Application.StepOptions.DTOs.CreateMultipleChoiceStepOptionCommandDTO)">
+            <summary>
+            ساخت پاسخ چند گزینه ای
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.StepOptionController.CreateText(Application.StepOptions.DTOs.CreateTextStepOptionCommandDTO)">
+            <summary>
+            ساخت پاسخ متنی
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.StepOptionController.CreateImage(Application.StepOptions.DTOs.CreateImageStepOptionCommandDTO)">
+            <summary>
+            ساخت پاسخ تصویری
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.StepOptionController.CreateTask(Application.StepOptions.DTOs.CreateTaskStepOptionCommandDTO)">
+            <summary>
+            ساخت تکلیف
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.StepOptionController.CreateAction(Application.StepOptions.DTOs.CreateActionStepOptionCommandDTO)">
+            <summary>
+            ساخت تعامل
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.StepOptionController.GetAll(Application.StepOptions.DTOs.GetAllStepOptionsQueryDTO)">
+            <summary>
+            دریافت همه گزینه‌های یک مرحله
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.StepOptionController.Delete(System.Int64,System.Boolean)">
+            <summary>
+            دریافت همه گزینه‌های یک مرحله
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.StepsController">
+            <summary>
+            مراحل تمرینات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.StepsController.#ctor(Data.Contracts.IRepository{Entities.Excersies.Step},AutoMapper.IMapper,Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            مراحل تمرینات
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.TicketsController">
+            <summary>
+            کنترلر تیکت ها
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.TicketsController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر تیکت ها
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.TicketsController.Create(Application.Tickets.DTOs.CreateTicketDTO)">
+            <summary>
+            ایجاد تیکت جدید
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.TicketsController.Answer(Application.Tickets.DTOs.AnswerTicketDTO)">
+            <summary>
+            پاسخ به تیکت
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.TicketsController.Close(System.Int64)">
+            <summary>
+            بستن تیکت
+            </summary>
+            <param name="ticketId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.TicketsController.Get(System.Int64)">
+            <summary>
+            جزئیات تیکت
+            </summary>
+            <param name="ticketId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.TicketsController.GetTickets(Common.GridResults.GlobalGrid,System.Nullable{Entities.Tickets.TicketType},System.Nullable{Entities.Tickets.TicketStatus})">
+            <summary>
+            لیست تیکت ها
+            </summary>
+            <param name="input"></param>
+            <param name="type"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.TicketsController.GetMyTickets(Common.GridResults.GlobalGrid)">
+            <summary>
+            لیست تیکت های من
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.TicketsController.GetMyAnsweredTicketCount">
+            <summary>
+            تعداد تیکت های پاسخ داده شده ی من
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.TicketsController.GetNotAnsweredTicketCount">
+            <summary>
+            تعداد تیکت های در انتظار پاسخ 
+            
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.UploadersController">
+            <summary>
+            کنترلر آپاود
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UploadersController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher)">
+            <summary>
+            کنترلر آپاود
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UploadersController.Upload(Services.Uploader.DTO.UploadV2DTO)">
+            <summary>
+            آپلود
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UploadersController.Get(System.String,System.Int64)">
+            <summary>
+            دریافت فایل
+            </summary>
+            <param name="guid"></param>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UploadersController.Delete(System.String)">
+            <summary>
+            حذف فایل
+            </summary>
+            <param name="guid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UploadersController.UploadCkEditor(Application.Uploaders.DTOs.UploadCkEditorDTO)">
+            <summary>
+            آپلود عکس بدون ذخیره سازی در مدیا
+            </summary>
+            <param name="inputDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.UsersController">
+            <summary>
+            کنترلر کاربران
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher,Services.Services.WalletsServices.IWalletService,Data.Contracts.IUserRepository,Microsoft.Extensions.Logging.ILogger{PadyLife.Api.Controllers.v1.UsersController},Services.Services.JwtServices.IJwtService,Microsoft.AspNetCore.Identity.UserManager{Entities.Users.User},Microsoft.AspNetCore.Identity.RoleManager{Entities.Users.Role},Microsoft.AspNetCore.Identity.SignInManager{Entities.Users.User},Microsoft.AspNetCore.Http.IHttpContextAccessor,Data.Contracts.IRepository{Entities.Users.UserPlan},Data.Contracts.IRepository{Entities.Users.UserPlanAnswer},Data.Contracts.IRepository{Entities.Questions.QuestionLinked},Data.Contracts.IRepository{Entities.Plans.PlanQuestion},Services.Services.AuthServices.IGoogleLoginService,Microsoft.Extensions.Caching.Distributed.IDistributedCache,Services.Services.SmsStrategy.SmsServices.ISmsService)">
+            <summary>
+            کنترلر کاربران
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.GetByToken(System.Threading.CancellationToken)">
+            <summary>
+            دریافت اطلاعات کاربر احراز شده
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="count"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.Get(System.Int32,System.Int32,System.String,System.String,System.Threading.CancellationToken,System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+            <summary>
+            دریافت لیست کاربران
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="count"></param>
+            <param name="isActive"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.Get(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            دریافت کاربر با شناسه
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.Token(PadyLife.Api.Models.Users.TokenRequest,System.Threading.CancellationToken)">
+            <summary>
+            دربافت توکن
+            </summary>
+            <param name="tokenRequest">The information of token request</param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.Update(System.Int64,PadyLife.Api.Models.Users.UpdateUserDTO,System.Threading.CancellationToken)">
+            <summary>
+            ویرایش کاربر
+            </summary>
+            <param name="id"></param>
+            <param name="user"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.Delete(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            حذف کاربر
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.ToggleIsActive(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            فعال / غیرفعال کردن کاربر
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.SendOTPCodeToPhoneNumber(PadyLife.Api.Models.Users.SendVerificationCodeRequest,System.Threading.CancellationToken)">
+            <summary>
+            ارسال کد تأیید به شماره موبایل برای ثبت‌نام
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.Register(PadyLife.Api.Models.Users.RegisterDTO,System.Threading.CancellationToken)">
+            <summary>
+            ثبت‌نام کاربر با کد تأیید
+            </summary>
+            <param name="input"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.AddRoleToUser(PadyLife.Api.Models.Users.AddRoleToUserDTO,System.Threading.CancellationToken)">
+            <summary>
+            افزودن نقش ها به کاربر
+            </summary>
+            <param name="input"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.RemoveFromRolesUser(PadyLife.Api.Models.Users.AddRoleToUserDTO,System.Threading.CancellationToken)">
+            <summary>
+            حذف نقش ها از کاربر
+            </summary>
+            <param name="input"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.GetAllRoles(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            دریافت تمامی نقش ها
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="count"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.SetPassword(PadyLife.Api.Models.Users.SetPasswordRequest)">
+            <summary>
+            اعمال پسورد برای کاربرانی که پسورد ندارند
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.GetMyBadges(Application.Users.Queries.GetMyBadgesQuery)">
+            <summary>
+            دریافت لیست Badgeهای من
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.RegisterSimilarity(Application.Users.Commands.RegisterSimilarUserCommand)">
+            <summary>
+            ثبت کاربر مشابه و صدور نشان
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.GetSessionInfo">
+            <summary>
+            دریافت اطلاعات Session جاری
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.Logout">
+            <summary>
+            لاگ‌آوت و پاک کردن Session
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.ForgotPassword(PadyLife.Api.Models.Users.ForgotPasswordRequestDTO,System.Threading.CancellationToken)">
+            <summary>
+            درخواست بازنشانی رمز عبور با ارسال کد SMS
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UsersController.ResetPassword(PadyLife.Api.Models.Users.ResetPasswordRequestDTO,System.Threading.CancellationToken)">
+            <summary>
+            تأیید کد بازیابی و بازنشانی رمز عبور
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.UserStepAnswersController">
+            <summary>
+            کنترلر ثبت پاسخ‌های کاربران
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UserStepAnswersController.#ctor(Application.Cqrs.Commands.ICommandDispatcher)">
+            <summary>
+            کنترلر ثبت پاسخ‌های کاربران
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UserStepAnswersController.SubmitAnswer(Application.UserStepAnswers.DTOs.CreateUserStepAnswerCommandDTO)">
+            <summary>
+            ثبت پاسخ کاربر به یک StepOption
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.UserStepAnswersController.HasSubmitAnswer(Application.UserStepAnswers.DTOs.CreateUserStepAnswerCommandDTO)">
+            <summary>
+            ثبت پاسخ کاربر به یک StepOption
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.VisitTrackingController">
+            <summary>
+            کنترلر آمار
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.TrackVisit(Application.Visits.TrackVisitDTO)">
+            <summary>
+            ردیابی بازدید صفحه
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetStats(Application.Visits.VisitFilterDTO)">
+            <summary>
+            دریافت آمار بازدید بر اساس فیلتر
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetStatsByEntityType(System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            دریافت آمار بازدید بر اساس نوع موجودیت
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetPlanStats(System.Int64,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            دریافت آمار بازدید یک پلن خاص
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetSectionStats(System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            دریافت آمار بازدید بر اساس بخش
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetPopularPages(System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            دریافت پر بازدیدترین صفحات
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.ProcessDailyStats(Application.Visits.ProcessDailyStatsDTO)">
+            <summary>
+            پردازش دستی آمار روزانه (برای ادمین)
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetPageStats(System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            دریافت آمار بازدید یک صفحه خاص
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetAllSectionStats(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            دریافت آمار بازدید بر اساس بخش‌ها
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetDailyChartData(System.String,System.Nullable{System.Int64},System.Int32)">
+            <summary>
+            دریافت داده‌های نمودار روزانه
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetVisitSummary(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            دریافت خلاصه آمار
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.ProcessDateRangeStats(Application.Visits.ProcessDateRangeStatsDTO)">
+            <summary>
+            پردازش آمار برای بازه زمانی مشخص
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.CleanupOldData(Application.Visits.CleanupDataDTO)">
+            <summary>
+            پاک‌سازی داده‌های قدیمی
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetGrowthStats(System.String,System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            دریافت آمار رشد بازدید
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetVisitSources(System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            دریافت منابع بازدید یک صفحه
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.VisitTrackingController.GetRealtimeStats(System.Int32)">
+            <summary>
+            دریافت آمار بازدید واقعی (Real-time)
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.WalletsController">
+            <summary>
+            کنترلر کیف پول ها
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WalletsController.#ctor(Application.Cqrs.Commands.ICommandDispatcher,Application.Cqrs.Queris.IQueryDispatcher,Services.Services.WalletsServices.IWalletService)">
+            <summary>
+            کنترلر کیف پول ها
+            </summary>
+            <param name="commandDispatcher"></param>
+            <param name="queryDispatcher"></param>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WalletsController.GetWallets(Common.GridResults.GlobalGrid,System.String,System.String)">
+            <summary>
+            لیست کیف پول ها
+            </summary>
+            <param name="input"></param>
+            <param name="userFullName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WalletsController.GetWalletTransactions(Common.GridResults.GlobalGrid,System.Int64)">
+            <summary>
+            لیست تراکنش های کیف پول ها
+            </summary>
+            <param name="input"></param>
+            <param name="walletId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WalletsController.GetWalletById(System.Int64)">
+            <summary>
+            جزئیات کیف پول
+            </summary>
+            <param name="walletId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WalletsController.GetMyWallet">
+            <summary>
+            جزئیات کیف پول کاربر لاگین کرده
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WalletsController.GetMyWalletTransactions(Common.GridResults.GlobalGrid)">
+            <summary>
+            تاریخچه تراکنش های کیف پول کاربر لاگین کرده
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WalletsController.Withdraw(Application.Wallets.DTOs.WalletWithdrawDTO)">
+            <summary>
+            برداشت از حساب
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WalletsController.Deposit(Application.Wallets.DTOs.WalletDepositDTO)">
+            <summary>
+            واریز به حساب
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WalletsController.ChargeMyWallet(System.Int64)">
+            <summary>
+            لینک درگاه پرداخت برای افزایش موجودی کیف پول
+            </summary>
+            <param name="amount"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PadyLife.Api.Controllers.v1.WarehouseController">
+            <summary>
+            کنترلر انبار
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WarehouseController.GetWarehouses(Common.GridResults.GlobalGrid,System.Nullable{System.Boolean})">
+            <summary>
+            دریافت لیست انبارها
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WarehouseController.GetWarehouse(System.Int64)">
+            <summary>
+            دریافت اطلاعات یک انبار
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WarehouseController.Create(Application.Warehouseing.DTOs.Application.Warehousing.DTOs.CreateWarehouseDTO)">
+            <summary>
+            ایجاد انبار جدید
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WarehouseController.Update(System.Int64,Application.Warehouseing.DTOs.Application.Warehousing.DTOs.UpdateWarehouseDTO)">
+            <summary>
+            ویرایش انبار
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WarehouseController.Deactivate(System.Int64)">
+            <summary>
+            غیرفعال کردن انبار
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WarehouseController.AddZone(System.Int64,Application.Warehouseing.DTOs.Application.Warehousing.DTOs.AddZoneDTO)">
+            <summary>
+            افزودن منطقه به انبار
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WarehouseController.RemoveZone(Application.Warehouseing.Commands.RemoveZoneCommand)">
+            <summary>
+            افزودن منطقه به انبار
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Controllers.v1.WarehouseController.GetProductInventory(System.Int64,System.Nullable{System.Int64})">
+            <summary>
+            دریافت موجودی یک محصول/واریانت در انبارها
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.UserId">
+            <summary>
+            کاربر
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.CountryId">
+            <summary>
+            کشور
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.ProvinceId">
+            <summary>
+            استان
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.CityId">
+            <summary>
+            شهر
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.PostalCode">
+            <summary>
+            کدپستی
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.AddressText">
+            <summary>
+            آدرس
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.Plaque">
+            <summary>
+            پلاک
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.Unit">
+            <summary>
+            واحد
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.Floor">
+            <summary>
+            طبقه
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.RecipientName">
+            <summary>
+            نام گیرنده
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.RecipientPhone">
+            <summary>
+            تلفن همراه گیرنده
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.LandlinePhone">
+            <summary>
+            نلفن ثابت پیرنده
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.IsDefault">
+            <summary>
+            آدرس همیشگی
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.AddressType">
+            <summary>
+            مکان آدرس محل کار یا خانه و...
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.DTOs.AddressDTO.GeoLocation">
+            <summary>
+            موقعیت مکانی
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Models.Users.RegisterDTO">
+            <summary>
+            مدل ساخت کاربر جدید
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.RegisterDTO.UserName">
+            <summary>
+            نام کاربری
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.RegisterDTO.Email">
+            <summary>
+            ایمیل
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.RegisterDTO.PhoneNumber">
+            <summary>
+            شماره همراه
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.RegisterDTO.Password">
+            <summary>
+            گذرواژه
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.RegisterDTO.Type">
+            <summary>
+            نوع ثبت نام (کاربر یا متخصص) توسط ثبتام کننده
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.RegisterDTO.VerificationCode">
+            <summary>
+            کد تأیید ارسال شده به شماره موبایل
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Models.Users.UserType">
+            <summary>
+            نوع کاربر 
+            </summary>
+        </member>
+        <member name="F:PadyLife.Api.Models.Users.UserType.Specialist">
+            <summary>
+            متخصص
+            </summary>
+        </member>
+        <member name="F:PadyLife.Api.Models.Users.UserType.User">
+            <summary>
+            کاربر
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Models.Users.AddRoleToUserDTO">
+            <summary>
+            مدل افزودن نقش به کاربر
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.AddRoleToUserDTO.UserId">
+            <summary>
+            َناسه کاربر
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.AddRoleToUserDTO.Roles">
+            <summary>
+            نقش ها
+            لیستی از رشته ها که نقش کاربر می باشد
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Models.Users.SendVerificationCodeRequest">
+            <summary>
+            مدل درخواست ارسال کد تأیید
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.SendVerificationCodeRequest.PhoneNumber">
+            <summary>
+            شماره همراه
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Models.Users.TokenRequest">
+            <summary>
+            درخواست توکن
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.TokenRequest.username">
+            <summary>
+            نام کاربری
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.TokenRequest.password">
+            <summary>
+            گذر واژه
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Models.Users.TokenResponseDTO">
+            <summary>
+            پاسخ درخواست توکن
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.TokenResponseDTO.User">
+            <summary>
+            اطلاعات کاربری
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.TokenResponseDTO.AccessToken">
+            <summary>
+            توکن
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Models.Users.UpdateUserDTO">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.FullName">
+            <summary>
+            نام و نام خانوادگی
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.Age">
+            <summary>
+            سن
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.Gender">
+            <summary>
+            جنسیت
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.IsActive">
+            <summary>
+            وضعیت فعالیت
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.Birthdate">
+            <summary>
+            تاریخ تولد
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.Hight">
+            <summary>
+            قد
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.Wight">
+            <summary>
+            وزن
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.JobTitle">
+            <summary>
+            شغل
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.MaritalStatus">
+            <summary>
+            وضعیت تاهل
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.InstagramId">
+            <summary>
+            اینستاگرام
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UpdateUserDTO.ProfileImage">
+            <summary>
+            نمایه تصویری فرد
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Models.Users.UserDTO">
+            <summary>
+            مدل دریافت کاربر
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Models.Users.UserDTO.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.PhoneNumber">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.IsActive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.Roles">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.FullName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.WalletCredit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.ShabaNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.IntroduceCode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.Gender">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.EmailConfirmed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.UserDTO.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PadyLife.Api.Models.Users.RoleDTO">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PadyLife.Api.Models.Users.RoleDTO.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.RoleDTO.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PadyLife.Api.Models.Users.RoleDTO.Description">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

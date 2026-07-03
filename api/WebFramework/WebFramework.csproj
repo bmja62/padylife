@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+		<PackageReference Include="Asp.Versioning.Mvc" />
+		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="Hangfire" />
+		<PackageReference Include="Hangfire.PostgreSql" />
+		<PackageReference Include="LinqKit" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+		<PackageReference Include="Microsoft.AspNetCore.Authorization" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" />
+		<PackageReference Include="Parbad" />
+		<PackageReference Include="Parbad.AspNetCore" />
+		<PackageReference Include="Parbad.Gateway.ZarinPal" />
+		<PackageReference Include="Parbad.Gateway.Zibal" />
+		<PackageReference Include="Parbad.Storage.Cache" />
+		<PackageReference Include="SixLabors.ImageSharp" />
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Filters" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" />
+		<PackageReference Include="Swashbuckle.AspNetCore.ReDoc" />
+		<PackageReference Include="Serilog.AspNetCore" />
+		<PackageReference Include="Serilog.Sinks.Seq" />
+		<PackageReference Include="IdGen" />
+		<PackageReference Include="IdGen.DependencyInjection" />
+		<PackageReference Include="FluentValidation" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" />
+		<PackageReference Include="System.Text.Json" />
+
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Application\Application.csproj" />
+		<ProjectReference Include="..\Services\Services.csproj" />
+	</ItemGroup>
+
+</Project>

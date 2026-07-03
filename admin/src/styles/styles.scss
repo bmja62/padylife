@@ -1,0 +1,42 @@
+// Write your overrides
+@use "vuetify/styles" as * with ($body-font-family: IRANSans, $heading-font-family: IRANSans);
+
+@font-face {
+  font-display: swap;
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: normal;
+  src: url("../assets/fonts/IRANSans/IRANSansWeb.woff2") format("woff2");
+}
+
+*, * > *, body, body > *, .v-table,
+.v-table > *, .v-data-table, .v-data-table > * {
+  font-family: IRANSans, sans-serif !important;
+}
+
+.v-data-table-header__content > * {
+  letter-spacing: normal !important;
+}
+
+.custom-alert {
+  position: fixed !important;
+  z-index: 99999 !important;
+  inline-size: 80%;
+  inset-block-start: 30px !important;
+  max-inline-size: 100%;
+
+  @media screen and (min-width: 768px) {
+    inline-size: 25%;
+  }
+}
+
+.plate-inputs-general-class {
+  width: 100%;
+  border-radius: 5px;
+  height: 100%;
+  text-align: center;
+  direction: ltr;
+  color: #424242;
+  letter-spacing: 1.5px;
+  outline: none;
+}

@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  html::before,
+  html::after,
+  *,
+  *::before,
+  *::after {
+    @apply font-Peyda;
+  }
+
+  :root {
+    /* THIS IS FOR OVERWRITING RADIO BUTTONS BACKGROUND */
+    --radio-background-color: #f6dce2;
+    /* THIS IS FOR OVERWRITING PAGEWRAPPER HEIGHT */
+    --wrapper-header-height: 64px;
+  }
+  .custom-pattern-bg-image {
+    @apply bg-primary;
+  }
+}
+
+html:hover, *:hover {
+  scrollbar-color: unset;
+}
+.sr-only{
+  display: none !important;
+}
+
+html{
+  @apply ring-0 outline-0;
+}
+[data-f-id="pbf"] {
+  display: none !important;
+}
+.vpd-next {
+  margin-left: 50px !important;
+}
+.vpd-content {
+  @apply rounded-xl;
+}
+.vpd-column-header {
+  @apply mb-2;
+}
+.vpd-column-header,
+.vpd-simple-content {
+  @apply border-b;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+.shake-enter-active,
+.shake-leave-active {
+  animation: shake 0.3s ease-out;
+}
+
+@keyframes modal-show {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes modal-hide {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+.modal-enter-active {
+  animation: modal-show 0.3s ease-in-out;
+}
+.modal-leave-active {
+  animation: modal-hide 0.3s ease-in-out;
+}
+
+.slide-side-enter-active:dir(rtl) {
+  animation: slide-side 0.3s ease-in;
+}
+.slide-side-enter-active:dir(ltr) {
+  animation: slide-side-reverse 0.3s ease-in;
+}
+
+.slide-side-leave-active:dir(rtl) {
+  animation: slide-side reverse 0.3s ease-out;
+}
+.slide-side-leave-active:dir(ltr) {
+  animation: slide-side-reverse reverse 0.3s ease-out;
+}
+
+@keyframes slide-side {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-side-reverse {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
