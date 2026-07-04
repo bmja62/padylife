@@ -129,7 +129,10 @@ app.IntializeDatabase();
 app.UseCustomExceptionHandler();
 app.UseHsts(app.Environment);
 
-app.UseHttpsRedirection();
+if (app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseStaticFiles(new StaticFileOptions
 {
