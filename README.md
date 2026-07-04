@@ -5,6 +5,7 @@ This repository contains multiple deployable services:
 - `api` (ASP.NET Core 8 Web API)
 - `app` (Nuxt 3 client)
 - `admin` (Vue 3 + Vite admin panel)
+- `www` (padylife.ir homepage static site)
 
 ## Railway Deployment
 
@@ -13,6 +14,7 @@ This repo is prepared for Railway with Dockerfiles in each deployable project:
 - `api/Dockerfile`
 - `app/Dockerfile`
 - `admin/Dockerfile`
+- `www/Dockerfile`
 
 ## Branch and Environment Strategy
 
@@ -33,7 +35,7 @@ Auto deploy should stay disabled because you want to deploy manually.
 
 ## 2. Create Services from This Monorepo
 
-Create three Railway services in the same project:
+Create four Railway services in the same project:
 
 1. API service
 	- Root Directory: `api`
@@ -44,6 +46,9 @@ Create three Railway services in the same project:
 3. Admin service
 	- Root Directory: `admin`
 	- Dockerfile: `Dockerfile` (inside `admin`)
+4. Homepage service
+	- Root Directory: `www`
+	- Dockerfile: `Dockerfile` (inside `www`)
 
 ## 3. Configure Branch per Environment
 
@@ -85,6 +90,10 @@ Note: This API fails to boot if `ASPNETCORE_ENVIRONMENT` is missing.
 
 - `VITE_BASE_API_URL` (example: `https://<api-domain>`)
 
+### Homepage (`www` service)
+
+- No required environment variables.
+
 ## 5. Manual Deploy Flow
 
 You will deploy manually in Railway:
@@ -106,4 +115,5 @@ After first successful deploy:
 
 - Dockerfiles use Railway `PORT` automatically.
 - Frontends are built as static assets and served with `serve`.
+- Homepage is served as static files with `serve` from `www/src`.
 - API listens on Railway-assigned port and runs with `dotnet PadyLife.Api.dll`.
