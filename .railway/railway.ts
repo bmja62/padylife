@@ -7,7 +7,12 @@ export default defineRailway((ctx) => {
   const Postgres = postgres("Postgres");
   const postgresVolume = volume("postgres-volume", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 500 });
   const api = service("api", {
-    source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
+    source: github("bmja62/padylife", { branch, rootDirectory: "." }),
+    build: {
+      builder: "DOCKERFILE",
+      dockerfilePath: ".deploy/api/Dockerfile",
+    },
+    start: "ASPNETCORE_URLS=http://0.0.0.0:$PORT dotnet PadyLife.Api.dll",
     replicas: 1,
     env: {
       ASPNETCORE_ENVIRONMENT: ctx.environment,

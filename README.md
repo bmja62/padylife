@@ -39,7 +39,7 @@ Production should stay manual.
 Create three Railway services in the same project:
 
 1. API service
-	- Root Directory: `api`
+	- Root Directory: `.`
 	- Dockerfile: `.deploy/api/Dockerfile` (repository root)
 2. App service
 	- Root Directory: `app`

@@ -5,4 +5,4 @@
 **/*.user
 **/*.suo
 **/*.swp
-MyApi/appsettings.local.json
+api/MyApi/appsettings.local.json
