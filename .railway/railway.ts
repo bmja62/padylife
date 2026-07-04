@@ -1,4 +1,4 @@
-import { defineRailway, github, postgres, project, service, volume } from "railway/iac";
+import { defineRailway, github, postgres, preserve, project, service, volume } from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
@@ -17,7 +17,7 @@ export default defineRailway((ctx) => {
     replicas: 1,
     env: {
       ASPNETCORE_ENVIRONMENT: ctx.environment,
-      ConnectionStrings__PostgreSQL: Postgres.env.DATABASE_URL,
+      ConnectionStrings__PostgreSQL: preserve(),
     },
   });
   const app = service("app", {
