@@ -1,0 +1,8 @@
+{
+  "name": "padylife-root",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "railway": "^3.4.1"
+  }
+}

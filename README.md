@@ -12,18 +12,19 @@ The `www` homepage is deferred for now and is not part of the current Railway se
 
 This repo is prepared for Railway with Dockerfiles in each deployable project:
 
-- `api/Dockerfile`
-- `app/Dockerfile`
-- `admin/Dockerfile`
+- `.deploy/api/Dockerfile`
+- `.deploy/app/Dockerfile`
+- `.deploy/admin/Dockerfile`
 
 ## Branch and Environment Strategy
 
 Use this branch mapping in Railway environments:
 
-- `mainbranch` -> `staging`
+- `main` -> `staging`
 - `main` -> `production`
 
-Auto deploy should stay disabled because you want to deploy manually.
+Staging should have auto-deploy enabled in the Railway dashboard.
+Production should stay manual.
 
 ## 1. Create Railway Project and Environments
 
@@ -39,21 +40,23 @@ Create three Railway services in the same project:
 
 1. API service
 	- Root Directory: `api`
-	- Dockerfile: `Dockerfile` (inside `api`)
+	- Dockerfile: `.deploy/api/Dockerfile` (repository root)
 2. App service
 	- Root Directory: `app`
-	- Dockerfile: `Dockerfile` (inside `app`)
+	- Dockerfile: `.deploy/app/Dockerfile` (repository root)
 3. Admin service
 	- Root Directory: `admin`
-	- Dockerfile: `Dockerfile` (inside `admin`)
+	- Dockerfile: `.deploy/admin/Dockerfile` (repository root)
 
 ## 3. Configure Branch per Environment
 
 For each Railway service:
 
-If `mainbranch` does not exist yet, create it from `main` and push it first.
-1. Open `staging` environment and set Source Branch to `mainbranch`.
-2. Open `production` environment and set Source Branch to `main`.
+1. Open `staging` environment and set Source Branch to `main`.
+2. Enable auto-deploy for `staging` in the Railway dashboard.
+3. Open `production` environment and set Source Branch to `main`.
+4. Keep production on manual deploys.
+5. For staging access, use Railway generated service links instead of `padylife.ir` subdomains.
 
 ## 4. Required Environment Variables
 

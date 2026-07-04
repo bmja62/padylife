@@ -3,10 +3,8 @@ WORKDIR /app
 
 RUN corepack enable
 
-COPY package.json yarn.lock .yarnrc.yml .npmrc ./
-RUN yarn install --frozen-lockfile
-
 COPY . .
+RUN yarn install --immutable
 RUN yarn build
 
 FROM node:20-alpine AS runtime
