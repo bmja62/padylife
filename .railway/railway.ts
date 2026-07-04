@@ -8,8 +8,6 @@ export default defineRailway((ctx) => {
   const postgresVolume = volume("postgres-volume", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 500 });
   const api = service("api", {
     source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
-    build: "dotnet publish MyApi/PadyLife.Api.csproj -c Release -o publish /p:UseAppHost=false",
-    start: "ASPNETCORE_URLS=http://0.0.0.0:$PORT dotnet publish/PadyLife.Api.dll",
     replicas: 1,
     env: {
       ASPNETCORE_ENVIRONMENT: ctx.environment,
@@ -18,7 +16,7 @@ export default defineRailway((ctx) => {
   });
   const app = service("app", {
     source: github("bmja62/padylife", { branch, rootDirectory: "app" }),
-    build: "corepack enable && corepack prepare pnpm@9.15.4 --activate && pnpm install --frozen-lockfile && pnpm run generate",
+    build: "pnpm run generate",
     start: "npx --yes serve@14 -s .output/public -l $PORT",
     replicas: 1,
     env: {
@@ -27,7 +25,7 @@ export default defineRailway((ctx) => {
   });
   const admin = service("admin", {
     source: github("bmja62/padylife", { branch, rootDirectory: "admin" }),
-    build: "corepack enable && yarn install --immutable && yarn build",
+    build: "yarn build",
     start: "npx --yes serve@14 -s dist -l $PORT",
     replicas: 1,
     env: {
