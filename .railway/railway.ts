@@ -12,7 +12,6 @@ export default defineRailway((ctx) => {
       builder: "DOCKERFILE",
       dockerfilePath: ".deploy/api/Dockerfile",
     },
-    start: "ASPNETCORE_URLS=http://0.0.0.0:$PORT dotnet PadyLife.Api.dll",
     healthcheck: "/swagger/index.html",
     healthcheckTimeout: 300,
     replicas: 1,
