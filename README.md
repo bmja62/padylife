@@ -5,8 +5,7 @@ This repository contains multiple deployable services:
 - `api` (ASP.NET Core 8 Web API)
 - `app` (Nuxt 3 client)
 - `admin` (Vue 3 + Vite admin panel)
-
-The `www` homepage is deferred for now and is not part of the current Railway setup.
+- `www` (static homepage)
 
 ## Railway Deployment
 
@@ -15,6 +14,9 @@ This repo is prepared for Railway with Dockerfiles in each deployable project:
 - `.deploy/api/Dockerfile`
 - `.deploy/app/Dockerfile`
 - `.deploy/admin/Dockerfile`
+- `.deploy/www/Dockerfile`
+
+Railway IaC should be kept at `.railway/railway.ts` (CLI-required path).
 
 ## Branch and Environment Strategy
 
@@ -36,7 +38,7 @@ Production should stay manual.
 
 ## 2. Create Services from This Monorepo
 
-Create three Railway services in the same project:
+Create four Railway services in the same project:
 
 1. API service
 	- Root Directory: `.`
@@ -47,6 +49,9 @@ Create three Railway services in the same project:
 3. Admin service
 	- Root Directory: `admin`
 	- Dockerfile: `.deploy/admin/Dockerfile` (repository root)
+4. WWW service
+	- Root Directory: `.`
+	- Dockerfile: `.deploy/www/Dockerfile` (repository root)
 
 ## 3. Configure Branch per Environment
 

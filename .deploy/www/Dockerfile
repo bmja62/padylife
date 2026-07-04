@@ -3,7 +3,7 @@ WORKDIR /app
 
 RUN npm install -g serve@14
 
-COPY src ./public
+COPY www/src ./public
 
 EXPOSE 3000
 CMD ["sh", "-c", "serve -s public -l ${PORT:-3000}"]

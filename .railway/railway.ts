@@ -18,6 +18,7 @@ export default defineRailway((ctx) => {
       ConnectionStrings__PostgreSQL: preserve(),
     },
   });
+
   const app = service("app", {
     source: github("bmja62/padylife", { branch, rootDirectory: "app" }),
     build: "pnpm run generate",
@@ -27,6 +28,7 @@ export default defineRailway((ctx) => {
       NUXT_PUBLIC_API_ADDRESS: prod ? "https://api.padylife.ir" : `https://${api.env.RAILWAY_PUBLIC_DOMAIN}`,
     },
   });
+
   const admin = service("admin", {
     source: github("bmja62/padylife", { branch, rootDirectory: "admin" }),
     build: "yarn build",
