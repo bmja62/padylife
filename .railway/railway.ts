@@ -13,6 +13,8 @@ export default defineRailway((ctx) => {
       dockerfilePath: ".deploy/api/Dockerfile",
     },
     start: "ASPNETCORE_URLS=http://0.0.0.0:$PORT dotnet PadyLife.Api.dll",
+    healthcheck: "/swagger/index.html",
+    healthcheckTimeout: 300,
     replicas: 1,
     env: {
       ASPNETCORE_ENVIRONMENT: ctx.environment,
