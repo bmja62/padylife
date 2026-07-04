@@ -1,11 +1,9 @@
-import { defineRailway, github, postgres, preserve, project, service, volume } from "railway/iac";
+import { defineRailway, github, preserve, project, service } from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
   const branch = "main";
 
-  const Postgres = postgres("Postgres");
-  const postgresVolume = volume("postgres-volume", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 500 });
   const api = service("api", {
     source: github("bmja62/padylife", { branch, rootDirectory: "." }),
     build: {
@@ -40,6 +38,6 @@ export default defineRailway((ctx) => {
   });
 
   return project("padylife", {
-    resources: [Postgres, api, app, admin, postgresVolume],
+    resources: [api, app, admin],
   });
 });
