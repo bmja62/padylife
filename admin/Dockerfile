@@ -4,9 +4,9 @@ WORKDIR /app
 RUN corepack enable
 
 COPY . .
-RUN if [ -f ".env.${RAILWAY_ENVIRONMENT_NAME:-production}" ]; then cp ".env.${RAILWAY_ENVIRONMENT_NAME:-production}" .env.production; fi
+RUN cp ".env-${RAILWAY_ENVIRONMENT_NAME}" .env
 RUN yarn install --immutable
-RUN yarn build
+RUN yarn build --mode "${RAILWAY_ENVIRONMENT_NAME:?RAILWAY_ENVIRONMENT_NAME is required}"
 
 FROM node:20-alpine AS runtime
 WORKDIR /app
