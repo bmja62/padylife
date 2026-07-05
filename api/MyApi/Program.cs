@@ -222,7 +222,11 @@ public partial class Program
         var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         if (string.IsNullOrWhiteSpace(env))
         {
-            throw new Exception("ASPNETCORE_ENVIRONMENT is not set!");
+            env = Environment.GetEnvironmentVariable("RAILWAY_ENVIRONMENT_NAME");
+        }
+        if (string.IsNullOrWhiteSpace(env))
+        {
+            throw new Exception("Deployment environment is not set. Expected ASPNETCORE_ENVIRONMENT or RAILWAY_ENVIRONMENT_NAME.");
         }
 
         var builder = new ConfigurationBuilder()

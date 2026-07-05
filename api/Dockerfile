@@ -11,4 +11,4 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 EXPOSE 8080
-ENTRYPOINT ["sh", "-c", "ASPNETCORE_URLS=http://0.0.0.0:${PORT:-8080} dotnet PadyLife.Api.dll"]
+ENTRYPOINT ["sh", "-c", "dotnet PadyLife.Api.dll --urls http://0.0.0.0:${PORT:-8080}"]

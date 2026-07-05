@@ -24,11 +24,6 @@ export default defineRailway((ctx) => {
     healthcheck: "/swagger/index.html",
     healthcheckTimeout: 300,
     replicas: 1,
-    env: {
-      ASPNETCORE_ENVIRONMENT: prod ? "production" : "staging",
-      aspnetcore_url: prod ? "https://api.padylife.ir" : "https://staging-api.padylife.ir",
-      ConnectionStrings__PostgreSQL: postgresService.env.DATABASE_URL,
-    },
   });
 
   const app = service("app", {
@@ -40,9 +35,6 @@ export default defineRailway((ctx) => {
       dockerfilePath: "app/Dockerfile",
     },
     replicas: 1,
-    env: {
-      NUXT_PUBLIC_API_ADDRESS: prod ? "https://api.padylife.ir" : "https://staging-api.padylife.ir",
-    },
   });
   const admin = service("admin", {
     source: github("bmja62/padylife", { branch, rootDirectory: "admin" }),
@@ -53,9 +45,6 @@ export default defineRailway((ctx) => {
       dockerfilePath: "admin/Dockerfile",
     },
     replicas: 1,
-    env: {
-      VITE_BASE_API_URL: prod ? "https://api.padylife.ir" : "https://staging-api.padylife.ir",
-    },
   });
 
   const www = service("www", {
@@ -67,9 +56,6 @@ export default defineRailway((ctx) => {
       dockerfilePath: "www/Dockerfile",
     },
     replicas: 1,
-    env: {
-      NUXT_PUBLIC_APP_URL: prod ? "https://app.padylife.ir" : "https://staging-app.padylife.ir",
-    },
   });
 
   return project("padylife", {

@@ -3,10 +3,19 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "env:select": "sh -c 'env_name=${RAILWAY_ENVIRONMENT_NAME:-production}; src_env=\"./src/.env.${env_name}\"; if [ -f \"$src_env\" ]; then cp \"$src_env\" ./src/.env; elif [ -f ./src/.env.production ]; then cp ./src/.env.production ./src/.env; fi; app_url=$(grep -E \"^APP_URL=\" ./src/.env | head -n 1 | cut -d= -f2-); [ -n \"$app_url\" ] || app_url=https://app.padylife.ir; app_url_escaped=$(printf \"%s\" \"$app_url\" | sed \"s/[\\\\/&]/\\\\\\\\&/g\"); sed -i \"s|__APP_URL__|$app_url_escaped|g\" ./src/index.html'",
-    "start": "npm run env:select && serve -s src -l ${PORT:-3000} --dotfiles"
+    "dev": "vite",
+    "prepare:staging": "cp ./.env.staging ./.env",
+    "prepare:production": "cp ./.env.production ./.env",
+    "build": "vite build",
+    "preview": "vite preview --port 5050",
+    "start": "serve -s dist -l ${PORT:-3000}"
   },
   "dependencies": {
+    "vue": "^3.5.18",
     "serve": "^14.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
+    "vite": "^5.4.19"
   }
 }

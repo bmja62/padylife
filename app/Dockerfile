@@ -5,6 +5,7 @@ RUN corepack enable
 RUN corepack prepare pnpm@9.15.4 --activate
 
 COPY . .
+RUN if [ -f ".env.${RAILWAY_ENVIRONMENT_NAME:-production}" ]; then cp ".env.${RAILWAY_ENVIRONMENT_NAME:-production}" .env; fi
 RUN pnpm install --frozen-lockfile
 
 RUN pnpm run generate
