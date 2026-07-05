@@ -2,6 +2,16 @@
   "name": "padylife-railway-iac",
   "private": true,
   "type": "module",
+  "scripts": {
+    "env:production": "railway environment production",
+    "env:staging": "railway environment staging",
+    "plan": "railway config plan --file railway.ts --runner ./node_modules/.bin/railway-iac-ts",
+    "apply": "railway config apply --file railway.ts --runner ./node_modules/.bin/railway-iac-ts --yes --confirm-destructive",
+    "plan:production": "npm run env:production && npm run plan",
+    "apply:production": "npm run env:production && npm run apply",
+    "plan:staging": "npm run env:staging && npm run plan",
+    "apply:staging": "npm run env:staging && npm run apply"
+  },
   "dependencies": {
     "railway": "^3.4.1"
   }

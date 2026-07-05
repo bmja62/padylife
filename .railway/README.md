@@ -1,42 +1,78 @@
-# Railway configuration
+# Railway IaC configuration
 
-This project defines its Railway infrastructure in code.
+This folder manages Railway infrastructure as code using the file `railway.ts`.
 
+## Where to run commands
 
-Use this file to describe the Railway project you want: services, databases, buckets, custom domains, replicas, groups, and environment variables.
-
-## Common commands
-
-Create the configuration files:
+Run all commands from this folder:
 
 ```bash
-railway config init
+cd /workspaces/padylife/.railway
 ```
 
-Import an existing Railway project into code:
+## Script-based workflow
+
+Use npm scripts in `package.json` instead of raw `railway config` commands.
+These scripts use the correct IaC file and runner automatically.
+
+Preview changes:
 
 ```bash
-railway config pull
+npm run plan:production
+npm run plan:staging
 ```
 
-Preview what Railway would change:
+Apply changes:
 
 ```bash
-railway config plan
+npm run apply:production
+npm run apply:staging
 ```
 
-Apply the planned changes:
+## What these scripts do
 
-```bash
-railway config apply
-```
+- Select target environment (`production` or `staging`).
+- Run plan/apply with:
+	- `--file railway.ts`
+	- `--runner ./node_modules/.bin/railway-iac-ts`
+- Apply non-interactively with destructive confirmation:
+	- `--yes --confirm-destructive`
 
 ## Notes
 
-- `railway config plan` is safe and does not change Railway.
-- `railway config apply` previews changes and asks before applying unless you pass `--yes`.
-- Destructive changes in non-interactive or agent sessions require `railway config apply --confirm-destructive` after reviewing the plan.
-- Services already managed by `railway.json` / `railway.toml` must be migrated before `.railway/railway.ts` can manage them.
-- Use `replicas` for scaling; advanced placement can still specify region names.
-- Use `group("Name", [resources])` to keep large projects organized on the Railway canvas.
-- Secrets imported from Railway are rendered as `preserve()` so existing values are retained without writing secret values to source. Use `railway config pull --omit-preserved-variables` for a smaller import.
+- `plan` is read-only and safe.
+- `apply` changes live Railway resources.
+- If you see unexpected deletes in plan output, stop and review before applying.
+- Keep all infrastructure changes in `railway.ts` so environments stay consistent.
+
+## Troubleshooting drift
+
+If `plan` still shows changes immediately after `apply`, use this checklist:
+
+1. Confirm the right environment is linked before running plan/apply.
+2. Always run scripts from this folder so the correct runner and file are used.
+3. Re-run `plan` and compare repeated fields (for example: build command, root directory, variables, or old resources marked for delete).
+4. If the same resources keep reappearing, verify there is no parallel manual config in Railway dashboard fighting IaC values.
+5. If old database or volume resources keep returning in plan, apply once with destructive confirmation already included in this repo scripts, then run plan again.
+
+Quick verify loop:
+
+```bash
+npm run plan:production
+npm run apply:production
+npm run plan:production
+
+npm run plan:staging
+npm run apply:staging
+npm run plan:staging
+```
+
+If drift persists after this loop, run JSON plan output and inspect exact fields:
+
+```bash
+railway environment production
+railway config plan --file railway.ts --runner ./node_modules/.bin/railway-iac-ts --json
+
+railway environment staging
+railway config plan --file railway.ts --runner ./node_modules/.bin/railway-iac-ts --json
+```
