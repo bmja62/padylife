@@ -8,6 +8,10 @@ export default defineRailway((ctx) => {
   const postgresProd = postgres("Postgres-Production");
   const postgresStaging = postgres("Postgres-Staging");
   const postgresService = prod ? postgresProd : postgresStaging;
+  
+  const postgresResourceName = postgresService.name;
+  const postgresVarRef = (key: string) => `\$\{\{${postgresResourceName}.${key}\}\}`;
+  const postgresNpgsqlConnectionString = `Host=${postgresVarRef("PGHOST")};Port=${postgresVarRef("PGPORT")};Database=${postgresVarRef("PGDATABASE")};Username=${postgresVarRef("PGUSER")};Password=${postgresVarRef("PGPASSWORD")};`;
 
   const postgresVolumeProd = volume("postgres-volume-production", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 1000 });
   const postgresVolumeStaging = volume("postgres-volume-staging", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 100 });
@@ -18,7 +22,7 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
     domains: [prod ? "api.padylife.ir" : "staging-api.padylife.ir"],
     env: {
-      ConnectionStrings__PostgreSQL: postgresService.env.DATABASE_URL,
+      ConnectionStrings__PostgreSQL: postgresNpgsqlConnectionString,
     },
     build: {
       buildEnvironment: "V3",
@@ -66,9 +70,5 @@ export default defineRailway((ctx) => {
     replicas: 1,
   });
 
-  return project("padylife", {
-      resources: prod
-        ? [api, app, admin, postgresService, www, postgresVolume]
-        : [api, app, admin, www, postgresService, postgresVolume]
-  });
+  return project("padylife", {resources: [api, app, admin, postgresService, www, postgresVolume]});
 });
