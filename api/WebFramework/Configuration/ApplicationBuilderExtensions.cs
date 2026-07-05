@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Services.DataInitializer;
 
 namespace WebFramework.Configuration
@@ -29,6 +30,7 @@ namespace WebFramework.Configuration
             //Use C# 8 using variables
             using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>(); //Service locator
+            var logger = scope.ServiceProvider.GetService<ILoggerFactory>()?.CreateLogger("DataInitialization");
 
             //Dos not use Migrations, just Create Database with latest changes
             //dbContext.Database.EnsureCreated();
@@ -39,7 +41,14 @@ namespace WebFramework.Configuration
 
             foreach (var dataInitializer in dataInitializers)
             {
-                dataInitializer.InitializeData();
+                try
+                {
+                    dataInitializer.InitializeData();
+                }
+                catch (Exception ex)
+                {
+                    logger?.LogError(ex, "Data initializer {InitializerName} failed during startup and was skipped.", dataInitializer.GetType().FullName);
+                }
 
                 dbContext.ChangeTracker.Clear();
             }
