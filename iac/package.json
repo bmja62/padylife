@@ -7,11 +7,11 @@
     "apply:confirm": "sh -c 'env_name=$(railway environment list --json | jq -r \".environments[] | select(.isLinked == true) | .name\" | head -n 1); [ -n \"$env_name\" ] || { echo \"Could not detect linked Railway environment.\"; echo \"Run npm run env:staging or npm run env:production first.\"; exit 1; }; echo \"Target Railway environment: $env_name\"; printf \"Is this correct? type YES to continue: \"; read -r ans; [ \"$ans\" = \"YES\" ] || { echo \"Aborted.\"; exit 1; }'",
     "apply:raw": "railway config apply --file railway.ts --runner ./node_modules/.bin/railway-iac-ts --yes --confirm-destructive",
     
-    "apply:all": "npm run apply:production && npm run apply:staging",
+    "apply:all": "npm run apply:staging && npm run apply:production",
     "apply:production": "npm run env:production && npm run apply",
     "apply:staging": "npm run env:staging && npm run apply",
 
-    "domains:all": "npm run domains:production && npm run domains:staging",
+    "domains:all": "npm run domains:staging && npm run domains:production",
     "domains:production": "npm run env:production && sh -c 'echo \"== production domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
     "domains:staging": "npm run env:staging && sh -c 'echo \"== staging domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
     
@@ -19,7 +19,7 @@
     "env:staging": "railway environment staging",
     
     "plan": "railway config plan --file railway.ts --runner ./node_modules/.bin/railway-iac-ts",
-    "plan:all": "npm run plan:production && npm run plan:staging",
+    "plan:all": "npm run plan:staging && npm run plan:production",
     "plan:production": "npm run env:production && npm run plan",
     "plan:staging": "npm run env:staging && npm run plan"
   },

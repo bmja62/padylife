@@ -3,6 +3,7 @@ import { defineRailway, github, project, service, volume, postgres } from "railw
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
   const branch = "main";
+  const watchPattern = prod ? ["/__never_trigger_deploy__/**"] : undefined;
 
   const postgresProd = postgres("Postgres-Production");
   const postgresStaging = postgres("Postgres-Staging");
@@ -23,6 +24,7 @@ export default defineRailway((ctx) => {
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "api/Dockerfile",
+      watchPatterns: watchPattern,
     },
     healthcheck: "/swagger/index.html",
     healthcheckTimeout: 300,
@@ -36,6 +38,7 @@ export default defineRailway((ctx) => {
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "app/Dockerfile",
+      watchPatterns: watchPattern,
     },
     replicas: 1,
   });
@@ -46,6 +49,7 @@ export default defineRailway((ctx) => {
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "admin/Dockerfile",
+      watchPatterns: watchPattern,
     },
     replicas: 1,
   });
@@ -57,6 +61,7 @@ export default defineRailway((ctx) => {
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "www/Dockerfile",
+      watchPatterns: watchPattern,
     },
     replicas: 1,
   });
