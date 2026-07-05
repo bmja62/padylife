@@ -15,6 +15,7 @@ export default defineRailway((ctx) => {
   
   const api = service("api", {
     source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
+    domains: [prod ? "api.padylife.ir" : "staging-api.padylife.ir"],
     build: {
       builder: "DOCKERFILE",
       dockerfilePath: "api/Dockerfile",
@@ -31,6 +32,7 @@ export default defineRailway((ctx) => {
 
   const app = service("app", {
     source: github("bmja62/padylife", { branch, rootDirectory: "app" }),
+    domains: [prod ? "app.padylife.ir" : "staging-app.padylife.ir"],
     build:{
       builder: "DOCKERFILE",
       dockerfilePath: "app/Dockerfile",
@@ -42,6 +44,7 @@ export default defineRailway((ctx) => {
   });
   const admin = service("admin", {
     source: github("bmja62/padylife", { branch, rootDirectory: "admin" }),
+    domains: [prod ? "admin.padylife.ir" : "staging-admin.padylife.ir"],
     build:{
       builder: "DOCKERFILE",
       dockerfilePath: "admin/Dockerfile",
@@ -54,6 +57,7 @@ export default defineRailway((ctx) => {
 
   const www = service("www", {
     source: github("bmja62/padylife", { branch, rootDirectory: "www" }),
+    domains: [prod ? "www.padylife.ir" : "staging-www.padylife.ir"],
     build: {
       builder: "DOCKERFILE",
       dockerfilePath: "www/Dockerfile",

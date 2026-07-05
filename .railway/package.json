@@ -10,7 +10,12 @@
     "plan:production": "npm run env:production && npm run plan",
     "apply:production": "npm run env:production && npm run apply",
     "plan:staging": "npm run env:staging && npm run plan",
-    "apply:staging": "npm run env:staging && npm run apply"
+    "apply:staging": "npm run env:staging && npm run apply",
+    "plan:all": "npm run plan:production && npm run plan:staging && npm run env:production",
+    "apply:all": "npm run apply:production && npm run apply:staging && npm run env:production",
+    "domains:list:production": "npm run env:production && sh -c 'echo \"== production domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
+    "domains:list:staging": "npm run env:staging && sh -c 'echo \"== staging domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
+    "domains:list": "npm run domains:list:production && npm run domains:list:staging && npm run env:production"
   },
   "dependencies": {
     "railway": "^3.4.1"

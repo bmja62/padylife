@@ -29,6 +29,18 @@ npm run apply:production
 npm run apply:staging
 ```
 
+Apply both environments:
+
+```bash
+npm run apply:all
+```
+
+List domains managed per service:
+
+```bash
+npm run domains:list
+```
+
 ## What these scripts do
 
 - Select target environment (`production` or `staging`).
@@ -37,6 +49,8 @@ npm run apply:staging
 	- `--runner ./node_modules/.bin/railway-iac-ts`
 - Apply non-interactively with destructive confirmation:
 	- `--yes --confirm-destructive`
+- `apply:all` runs production + staging apply and restores linked env to production.
+- `domains:list` prints current domain bindings for `api`, `app`, `admin`, and `www` in both environments.
 
 ## Notes
 
@@ -65,6 +79,8 @@ npm run plan:production
 npm run plan:staging
 npm run apply:staging
 npm run plan:staging
+
+npm run domains:list
 ```
 
 If drift persists after this loop, run JSON plan output and inspect exact fields:
