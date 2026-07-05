@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "apply": "npm run apply:confirm && npm run apply:raw",
-    "apply:confirm": "sh -c 'env_name=$(railway status --json | jq -r \".environment.name // \\\"none\\\"\"); echo \"Target Railway environment: $env_name\"; printf \"Is this correct? type YES to continue: \"; read -r ans; [ \"$ans\" = \"YES\" ] || { echo \"Aborted.\"; exit 1; }'",
+    "apply:confirm": "sh -c 'env_name=$(railway environment list --json | jq -r \".environments[] | select(.isLinked == true) | .name\" | head -n 1); [ -n \"$env_name\" ] || { echo \"Could not detect linked Railway environment.\"; echo \"Run npm run env:staging or npm run env:production first.\"; exit 1; }; echo \"Target Railway environment: $env_name\"; printf \"Is this correct? type YES to continue: \"; read -r ans; [ \"$ans\" = \"YES\" ] || { echo \"Aborted.\"; exit 1; }'",
     "apply:raw": "railway config apply --file railway.ts --runner ./node_modules/.bin/railway-iac-ts --yes --confirm-destructive",
     
     "apply:all": "npm run apply:production && npm run apply:staging",
