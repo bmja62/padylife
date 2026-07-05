@@ -1,13 +1,16 @@
-import { defineRailway, github, preserve, project, service, volume, postgres} from "railway/iac";
+import { defineRailway, github, project, service, volume, postgres } from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
   const branch = "main";
 
-  
-  const PostgresWTEN = postgres("Postgres-WTEN");
-  const postgresVolume = volume("postgres-volume", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 500 });
-  const postgresVolumeJ38W = volume("postgres-volume-j38W", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 5000 });
+  const postgresProd = postgres("Postgres-Production");
+  const postgresStaging = postgres("Postgres-Staging");
+  const postgresService = prod ? postgresProd : postgresStaging;
+
+  const postgresVolumeProd = volume("postgres-volume-production", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 1000 });
+  const postgresVolumeStaging = volume("postgres-volume-staging", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 100 });
+  const postgresVolume = prod ? postgresVolumeProd : postgresVolumeStaging;
  
   
   const api = service("api", {
@@ -22,7 +25,7 @@ export default defineRailway((ctx) => {
     env: {
       ASPNETCORE_ENVIRONMENT: prod ? "Production" : "Staging",
       aspnetcore_url: prod ? "https://api.padylife.ir" : "https://staging-api.padylife.ir",
-      ConnectionStrings__PostgreSQL: preserve(),
+      ConnectionStrings__PostgreSQL: postgresService.env.DATABASE_URL,
     },
   });
 
@@ -62,6 +65,6 @@ export default defineRailway((ctx) => {
   });
 
   return project("padylife", {
-        resources: [api, app, admin, www, PostgresWTEN, postgresVolume, postgresVolumeJ38W]
+      resources: [api, app, admin, www, postgresService, postgresVolume]
   });
 });
