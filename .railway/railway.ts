@@ -1,14 +1,21 @@
-import { defineRailway, github, preserve, project, service } from "railway/iac";
+import { defineRailway, github, preserve, project, service, volume, postgres} from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
   const branch = "main";
 
+ const PostgresWTEN = postgres("Postgres-WTEN");
+  const postgresVolume = volume("postgres-volume", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 500 });
+  const postgresVolumeJ38W = volume("postgres-volume-j38W", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 5000 });
+ 
+
+
+  
   const api = service("api", {
-    source: github("bmja62/padylife", { branch, rootDirectory: "." }),
+    source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
     build: {
       builder: "DOCKERFILE",
-      dockerfilePath: ".deploy/api/Dockerfile",
+      dockerfilePath: "api/Dockerfile",
     },
     healthcheck: "/swagger/index.html",
     healthcheckTimeout: 300,
@@ -18,6 +25,7 @@ export default defineRailway((ctx) => {
       ConnectionStrings__PostgreSQL: preserve(),
     },
   });
+
   const app = service("app", {
     source: github("bmja62/padylife", { branch, rootDirectory: "app" }),
     build: "pnpm run generate",
@@ -41,12 +49,12 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "." }),
     build: {
       builder: "DOCKERFILE",
-      dockerfilePath: ".deploy/www/Dockerfile",
+      dockerfilePath: "www/Dockerfile",
     },
     replicas: 1,
   });
 
   return project("padylife", {
-    resources: [api, app, admin, www],
+        resources: [api, app, admin, www, PostgresWTEN, postgresVolume, postgresVolumeJ38W]
   });
 });
