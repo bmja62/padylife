@@ -1,5 +1,9 @@
 <script setup>
-const appUrl = import.meta.env.VITE_APP_URL || "https://app.padylife.ir";
+const host = typeof window !== "undefined" ? window.location.hostname : "";
+const isStagingHost = host.includes("staging");
+const appUrl = isStagingHost
+    ? "https://staging-app.padylife.ir"
+    : (import.meta.env.VITE_APP_URL || "https://app.padylife.ir");
 </script>
 
 <template>
