@@ -1,4 +1,4 @@
-import { defineRailway, github, project, service, volume, postgres } from "railway/iac";
+import { defineRailway, github, preserve, project, service, volume, postgres } from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
@@ -17,6 +17,8 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
     domains: [prod ? "api.padylife.ir" : "staging-api.padylife.ir"],
     build: {
+      buildCommand: "dotnet publish MyApi/PadyLife.Api.csproj -c Release -o publish /p:UseAppHost=false",
+      buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "api/Dockerfile",
     },
@@ -24,9 +26,9 @@ export default defineRailway((ctx) => {
     healthcheckTimeout: 300,
     replicas: 1,
     env: {
-      ASPNETCORE_ENVIRONMENT: prod ? "Production" : "Staging",
-      aspnetcore_url: prod ? "https://api.padylife.ir" : "https://staging-api.padylife.ir",
-      ConnectionStrings__PostgreSQL: postgresService.env.DATABASE_URL,
+      ASPNETCORE_ENVIRONMENT: preserve(),
+      aspnetcore_url: preserve(),
+      ConnectionStrings__PostgreSQL: preserve(),
     },
   });
 
@@ -34,24 +36,28 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "app" }),
     domains: [prod ? "app.padylife.ir" : "staging-app.padylife.ir"],
     build:{
+      ...(prod ? {} : { buildCommand: "pnpm run generate" }),
+      buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "app/Dockerfile",
     },
     replicas: 1,
     env: {
-      NUXT_PUBLIC_API_ADDRESS: prod ? "https://app.padylife.ir" : "https://staging-app.padylife.ir",
+      NUXT_PUBLIC_API_ADDRESS: preserve(),
     },
   });
   const admin = service("admin", {
     source: github("bmja62/padylife", { branch, rootDirectory: "admin" }),
     domains: [prod ? "admin.padylife.ir" : "staging-admin.padylife.ir"],
     build:{
+      ...(prod ? {} : { buildCommand: "yarn build" }),
+      buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "admin/Dockerfile",
     },
     replicas: 1,
     env: {
-      VITE_BASE_API_URL: prod ? "https://admin.padylife.ir" : "https://staging-admin.padylife.ir",
+      VITE_BASE_API_URL: preserve(),
     },
   });
 
@@ -59,16 +65,19 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "www" }),
     domains: [prod ? "www.padylife.ir" : "staging-www.padylife.ir"],
     build: {
+      buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "www/Dockerfile",
     },
     replicas: 1,
     env: {
-      NUXT_PUBLIC_API_ADDRESS: prod ? "https://www.padylife.ir" : "https://staging-www.padylife.ir",
+      NUXT_PUBLIC_API_ADDRESS: preserve(),
     },
   });
 
   return project("padylife", {
-      resources: [api, app, admin, www, postgresService, postgresVolume]
+      resources: prod
+        ? [api, app, admin, postgresService, www, postgresVolume]
+        : [api, app, admin, www, postgresService, postgresVolume]
   });
 });

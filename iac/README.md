@@ -7,7 +7,7 @@ This folder manages Railway infrastructure as code using the file `railway.ts`.
 Run all commands from this folder:
 
 ```bash
-cd /workspaces/padylife/.railway
+cd /workspaces/padylife/iac
 ```
 
 ## Script-based workflow

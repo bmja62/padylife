@@ -16,8 +16,8 @@ This repo is prepared for Railway with Dockerfiles in each deployable project:
 - `admin/Dockerfile`
 - `www/Dockerfile`
 
-Railway IaC should be kept at `.railway/railway.ts` (CLI-required path).
-Railway SDK package files are stored in `.eailway/`.
+Railway IaC is kept at `iac/railway.ts`.
+Railway SDK package files are stored in `iac/`.
 
 ## Branch and Environment Strategy
 
