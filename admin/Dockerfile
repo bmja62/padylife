@@ -6,7 +6,7 @@ RUN corepack enable
 COPY . .
 RUN cp ".env-${RAILWAY_ENVIRONMENT_NAME}" .env
 RUN yarn install --immutable
-RUN yarn build --mode "${RAILWAY_ENVIRONMENT_NAME:?RAILWAY_ENVIRONMENT_NAME is required}"
+RUN yarn build --mode "${RAILWAY_ENVIRONMENT_NAME}"
 
 FROM node:20-alpine AS runtime
 WORKDIR /app
