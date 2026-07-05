@@ -1,4 +1,4 @@
-import { defineRailway, github, preserve, project, service, volume, postgres } from "railway/iac";
+import { defineRailway, github, project, service, volume, postgres } from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
@@ -25,9 +25,9 @@ export default defineRailway((ctx) => {
     healthcheckTimeout: 300,
     replicas: 1,
     env: {
-      ASPNETCORE_ENVIRONMENT: preserve(),
-      aspnetcore_url: preserve(),
-      ConnectionStrings__PostgreSQL: preserve(),
+      ASPNETCORE_ENVIRONMENT: prod ? "production" : "staging",
+      aspnetcore_url: prod ? "https://api.padylife.ir" : "https://staging-api.padylife.ir",
+      ConnectionStrings__PostgreSQL: postgresService.env.DATABASE_URL,
     },
   });
 
@@ -41,7 +41,7 @@ export default defineRailway((ctx) => {
     },
     replicas: 1,
     env: {
-      NUXT_PUBLIC_API_ADDRESS: preserve(),
+      NUXT_PUBLIC_API_ADDRESS: prod ? "https://api.padylife.ir" : "https://staging-api.padylife.ir",
     },
   });
   const admin = service("admin", {
@@ -54,7 +54,7 @@ export default defineRailway((ctx) => {
     },
     replicas: 1,
     env: {
-      VITE_BASE_API_URL: preserve(),
+      VITE_BASE_API_URL: prod ? "https://api.padylife.ir" : "https://staging-api.padylife.ir",
     },
   });
 
@@ -68,7 +68,7 @@ export default defineRailway((ctx) => {
     },
     replicas: 1,
     env: {
-      NUXT_PUBLIC_API_ADDRESS: preserve(),
+      NUXT_PUBLIC_APP_URL: prod ? "https://app.padylife.ir" : "https://staging-app.padylife.ir",
     },
   });
 
