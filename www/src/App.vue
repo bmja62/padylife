@@ -7,7 +7,7 @@ const appUrl = isStagingHost
 </script>
 
 <template>
-    <div class="container">
+    <div class="container" dir="rtl">
         <header>
             <div class="header-container">
                 <div class="hamburger-menu">
