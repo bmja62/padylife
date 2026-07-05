@@ -3,19 +3,20 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "env:production": "railway environment production",
     "env:staging": "railway environment staging",
-    "plan": "railway config plan --file railway.ts --runner ./node_modules/.bin/railway-iac-ts",
-    "apply": "railway config apply --file railway.ts --runner ./node_modules/.bin/railway-iac-ts --yes --confirm-destructive",
-    "plan:production": "npm run env:production && npm run plan",
-    "apply:production": "npm run env:production && npm run apply",
-    "plan:staging": "npm run env:staging && npm run plan",
+    "env:production": "railway environment production",
+    
     "apply:staging": "npm run env:staging && npm run apply",
-    "plan:all": "npm run plan:production && npm run plan:staging && npm run env:production",
-    "apply:all": "npm run apply:production && npm run apply:staging && npm run env:production",
-    "domains:list:production": "npm run env:production && sh -c 'echo \"== production domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
-    "domains:list:staging": "npm run env:staging && sh -c 'echo \"== staging domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
-    "domains:list": "npm run domains:list:production && npm run domains:list:staging && npm run env:production"
+    "apply:production": "npm run env:production && npm run apply",
+    "apply:all": "npm run apply:production && npm run apply:staging",
+    
+    "domains:staging": "npm run env:staging && sh -c 'echo \"== staging domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
+    "domains:production": "npm run env:production && sh -c 'echo \"== production domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
+    "domains:all": "npm run domains:production && npm run domains:staging",
+    
+    "plan:staging": "npm run env:staging && npm run plan",
+    "plan:production": "npm run env:production && npm run plan",
+    "plan:all": "npm run plan:production && npm run plan:staging",
   },
   "dependencies": {
     "railway": "^3.4.1"
