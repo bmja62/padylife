@@ -3,20 +3,25 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "env:staging": "railway environment staging",
-    "env:production": "railway environment production",
+    "apply": "npm run apply:confirm && npm run apply:raw",
+    "apply:confirm": "sh -c 'env_name=$(railway status --json | jq -r \".environment.name // \\\"none\\\"\"); echo \"Target Railway environment: $env_name\"; printf \"Is this correct? type YES to continue: \"; read -r ans; [ \"$ans\" = \"YES\" ] || { echo \"Aborted.\"; exit 1; }'",
+    "apply:raw": "railway config apply --file railway.ts --runner ./node_modules/.bin/railway-iac-ts --yes --confirm-destructive",
     
-    "apply:staging": "npm run env:staging && npm run apply",
-    "apply:production": "npm run env:production && npm run apply",
     "apply:all": "npm run apply:production && npm run apply:staging",
-    
-    "domains:staging": "npm run env:staging && sh -c 'echo \"== staging domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
-    "domains:production": "npm run env:production && sh -c 'echo \"== production domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
+    "apply:production": "npm run env:production && npm run apply",
+    "apply:staging": "npm run env:staging && npm run apply",
+
     "domains:all": "npm run domains:production && npm run domains:staging",
+    "domains:production": "npm run env:production && sh -c 'echo \"== production domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
+    "domains:staging": "npm run env:staging && sh -c 'echo \"== staging domains ==\"; for s in api app admin www; do echo \"-- $s\"; railway domain list --service \"$s\" --json; done'",
     
-    "plan:staging": "npm run env:staging && npm run plan",
-    "plan:production": "npm run env:production && npm run plan",
+    "env:production": "railway environment production",
+    "env:staging": "railway environment staging",
+    
+    "plan": "railway config plan --file railway.ts --runner ./node_modules/.bin/railway-iac-ts",
     "plan:all": "npm run plan:production && npm run plan:staging",
+    "plan:production": "npm run env:production && npm run plan",
+    "plan:staging": "npm run env:staging && npm run plan"
   },
   "dependencies": {
     "railway": "^3.4.1"
