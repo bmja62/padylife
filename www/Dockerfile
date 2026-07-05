@@ -1,9 +1,10 @@
 FROM node:20-alpine
 WORKDIR /app
 
-RUN npm install -g serve@14
+COPY package.json ./
+RUN npm install --omit=dev
 
-COPY src ./public
+COPY src ./src
 
 EXPOSE 3000
-CMD ["sh", "-c", "serve -s public -l ${PORT:-3000}"]
+CMD ["npm", "run", "start"]
