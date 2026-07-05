@@ -8,7 +8,8 @@ RUN corepack enable
 RUN corepack prepare pnpm@9.15.4 --activate
 
 COPY . .
-RUN cp ".env-${RAILWAY_ENVIRONMENT_NAME}" .env
+RUN ENV_NAME="${RAILWAY_ENVIRONMENT_NAME:?RAILWAY_ENVIRONMENT_NAME is required}" && \
+	cp ".env.${ENV_NAME}" .env
 RUN pnpm install --frozen-lockfile
 
 RUN pnpm run generate

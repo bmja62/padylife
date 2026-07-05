@@ -7,7 +7,8 @@ ENV RAILWAY_ENVIRONMENT_NAME=${RAILWAY_ENVIRONMENT_NAME}
 RUN corepack enable
 
 COPY . .
-RUN cp ".env-${RAILWAY_ENVIRONMENT_NAME}" .env
+RUN ENV_NAME="${RAILWAY_ENVIRONMENT_NAME:?RAILWAY_ENVIRONMENT_NAME is required}" && \
+	cp ".env.${ENV_NAME}" .env
 RUN yarn install --immutable
 RUN yarn build --mode "${RAILWAY_ENVIRONMENT_NAME}"
 
