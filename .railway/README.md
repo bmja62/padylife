@@ -2,9 +2,6 @@
 
 This project defines its Railway infrastructure in code.
 
-```txt
-.railway/railway.ts
-```
 
 Use this file to describe the Railway project you want: services, databases, buckets, custom domains, replicas, groups, and environment variables.
 
