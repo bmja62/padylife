@@ -1,8 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY api/. ./api/
-WORKDIR /src/api
+COPY . .
 RUN dotnet restore ./PadyLife.sln
 RUN dotnet publish ./MyApi/PadyLife.Api.csproj -c Release -o /app/publish /p:UseAppHost=false
 

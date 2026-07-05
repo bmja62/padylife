@@ -8,8 +8,8 @@ export default defineRailway(() => {
   const postgresVolumeJ38W = volume("postgres-volume-j38W", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 5000 });
   const api = service("api", {
     source: padylife,
-    root: ".",
-    build: { buildCommand: "dotnet publish MyApi/PadyLife.Api.csproj -c Release -o publish /p:UseAppHost=false", buildEnvironment: "V3", builder: "DOCKERFILE", dockerfilePath: ".deploy/api/Dockerfile" },
+    root: "api",
+    build: { buildCommand: "dotnet publish MyApi/PadyLife.Api.csproj -c Release -o publish /p:UseAppHost=false", buildEnvironment: "V3", builder: "DOCKERFILE", dockerfilePath: "Dockerfile" },
     healthcheck: "/swagger/index.html",
     healthcheckTimeout: 300,
     replicas: 1,
@@ -40,8 +40,8 @@ export default defineRailway(() => {
   });
   const www = service("www", {
     source: padylife,
-    root: ".",
-    build: { builder: "DOCKERFILE", dockerfilePath: ".deploy/www/Dockerfile" },
+    root: "www",
+    build: { builder: "DOCKERFILE", dockerfilePath: "Dockerfile" },
     replicas: 1,
   });
 

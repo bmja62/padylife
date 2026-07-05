@@ -11,12 +11,13 @@ This repository contains multiple deployable services:
 
 This repo is prepared for Railway with Dockerfiles in each deployable project:
 
-- `.deploy/api/Dockerfile`
-- `.deploy/app/Dockerfile`
-- `.deploy/admin/Dockerfile`
-- `.deploy/www/Dockerfile`
+- `api/Dockerfile`
+- `app/Dockerfile`
+- `admin/Dockerfile`
+- `www/Dockerfile`
 
 Railway IaC should be kept at `.railway/railway.ts` (CLI-required path).
+Railway SDK package files are stored in `.eailway/`.
 
 ## Branch and Environment Strategy
 
@@ -41,17 +42,17 @@ Production should stay manual.
 Create four Railway services in the same project:
 
 1. API service
-	- Root Directory: `.`
-	- Dockerfile: `.deploy/api/Dockerfile` (repository root)
+	- Root Directory: `api`
+	- Dockerfile: `Dockerfile`
 2. App service
 	- Root Directory: `app`
-	- Dockerfile: `.deploy/app/Dockerfile` (repository root)
+	- Dockerfile: `Dockerfile`
 3. Admin service
 	- Root Directory: `admin`
-	- Dockerfile: `.deploy/admin/Dockerfile` (repository root)
+	- Dockerfile: `Dockerfile`
 4. WWW service
-	- Root Directory: `.`
-	- Dockerfile: `.deploy/www/Dockerfile` (repository root)
+	- Root Directory: `www`
+	- Dockerfile: `Dockerfile`
 
 ## 3. Configure Branch per Environment
 

@@ -1,8 +1,0 @@
-.git
-.gitignore
-**/bin
-**/obj
-**/*.user
-**/*.suo
-**/*.swp
-api/MyApi/appsettings.local.json

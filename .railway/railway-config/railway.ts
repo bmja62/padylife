@@ -8,7 +8,7 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "." }),
     build: {
       builder: "DOCKERFILE",
-      dockerfilePath: "api/Dockerfile",
+      dockerfilePath: ".deploy/api/Dockerfile",
     },
     healthcheck: "/swagger/index.html",
     healthcheckTimeout: 300,
@@ -41,7 +41,7 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "." }),
     build: {
       builder: "DOCKERFILE",
-      dockerfilePath: "www/Dockerfile",
+      dockerfilePath: ".deploy/www/Dockerfile",
     },
     replicas: 1,
   });
