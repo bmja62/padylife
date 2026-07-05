@@ -1,6 +1,9 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 
+ARG RAILWAY_ENVIRONMENT_NAME
+ENV RAILWAY_ENVIRONMENT_NAME=${RAILWAY_ENVIRONMENT_NAME}
+
 RUN corepack enable
 RUN corepack prepare pnpm@9.15.4 --activate
 
