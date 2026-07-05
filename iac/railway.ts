@@ -17,7 +17,6 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
     domains: [prod ? "api.padylife.ir" : "staging-api.padylife.ir"],
     build: {
-      buildCommand: "dotnet publish MyApi/PadyLife.Api.csproj -c Release -o publish /p:UseAppHost=false",
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "api/Dockerfile",
@@ -36,7 +35,6 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "app" }),
     domains: [prod ? "app.padylife.ir" : "staging-app.padylife.ir"],
     build:{
-      ...(prod ? {} : { buildCommand: "pnpm run generate" }),
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "app/Dockerfile",
@@ -50,7 +48,6 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "admin" }),
     domains: [prod ? "admin.padylife.ir" : "staging-admin.padylife.ir"],
     build:{
-      ...(prod ? {} : { buildCommand: "yarn build" }),
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "admin/Dockerfile",
