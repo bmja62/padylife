@@ -1,19 +1,17 @@
 <script setup lang="ts">
 import {isAxiosError} from 'axios'
-import {computed, inject, onMounted, ref} from 'vue'
+import {inject, onMounted, ref} from 'vue'
 import type {ITableHeaders} from '@/models/ITableHeader'
 import type {IApiProvider} from '@/models/IApiProvider'
 import type {IGetUserFilters, IUpdateUserRolePayload, IUser} from '@/services/UserService'
 import {useSpinner} from '@/composables/spinner'
 import {useAlerts} from '@/composables/alert'
-import {useAuthStore} from "@/stores/auth";
+import {useAuthStore} from "@/stores/auth"
 
-// LifeCycles
 onMounted(() => {
   getUsers()
 })
 
-// Variables
 const $api = inject<IApiProvider>('$api')
 const spinner = useSpinner()
 const alert = useAlerts()
@@ -37,12 +35,7 @@ const roleOptions = [
     value: 'SuperAdmin',
   },
 ]
-const isRoleChangeEnabled = computed<boolean>(() => {
-  const mode = (import.meta.env.MODE || '').toLowerCase()
-  const apiBaseUrl = (import.meta.env.VITE_BASE_API_URL || '').toLowerCase()
 
-  return mode === 'staging' || apiBaseUrl.includes('staging')
-})
 const tableHeaders: ITableHeaders = [
   {title: 'شناسه', key: 'id'},
   {
@@ -65,10 +58,9 @@ const usersFilters = ref<IGetUserFilters>({
   count: 10,
   search: '',
   roleName: '',
-  onlyExpertUser:authStore.getUser.roles.filter(e=> e.name === 'Admin').length ? false : true
+  onlyExpertUser: authStore.getUser.roles.filter(e => e.name === 'Admin').length ? false : true,
 })
 
-// Functions
 function renderDeleteDialog(item: IUser) {
   tempUser.value = JSON.parse(JSON.stringify(item))
   isRenderingDeleteDialog.value = true
@@ -90,9 +82,6 @@ function extractCurrentManageableRole(user: IUser): 'Admin' | 'SuperAdmin' | nul
 }
 
 function renderRoleDialog(item: IUser) {
-  if (!isRoleChangeEnabled.value)
-    return
-
   tempUser.value = JSON.parse(JSON.stringify(item))
   selectedUserRole.value = extractCurrentManageableRole(item)
   isRenderingRoleDialog.value = true
@@ -213,6 +202,7 @@ async function resetFiltersAndGetUsers() {
         <RolePicker :return-object="false" v-model="usersFilters.roleName"></RolePicker>
       </VCol>
     </template>
+
     <CustomTable
       :items-list="usersList"
       :count="usersFilters.count"
@@ -223,14 +213,14 @@ async function resetFiltersAndGetUsers() {
     >
       <template #actions="data">
         <VBtn
-        v-if="$can('manage','all')"
+          v-if="$can('manage','all')"
           color="transparent"
           elevation="0"
           icon="mdi-pencil"
           @click="renderUpdateDialog(data.item)"
         />
         <VBtn
-        v-if="$can('manage','all')"
+          v-if="$can('manage','all')"
           color="transparent"
           elevation="0"
           :to="`/Users/${data.item.id}`"
@@ -255,10 +245,12 @@ async function resetFiltersAndGetUsers() {
           </VTooltip>
         </VBtn>
       </template>
+
       <template #isActive="data">
         <VChip color="success" v-if="data.item.isActive">فعال</VChip>
         <VChip color="error" v-if="!data.item.isActive">غیر فعال</VChip>
       </template>
+
       <template #roles="data">
         <VChip
           v-for="(role, index) in data.item.roles"
@@ -267,17 +259,11 @@ async function resetFiltersAndGetUsers() {
           size="small"
           label
           color="primary"
-          :class="[
-            'ma-1',
-            isRoleChangeEnabled && $can('manage', 'all') ? 'cursor-pointer' : '',
-          ]"
-          @click="isRoleChangeEnabled && $can('manage', 'all') ? renderRoleDialog(data.item) : null"
+          class="ma-1 cursor-pointer"
+          @click="renderRoleDialog(data.item)"
         >
           {{ role.description }}
-          <VTooltip
-            v-if="isRoleChangeEnabled && $can('manage', 'all')"
-            activator="parent"
-          >
+          <VTooltip activator="parent">
             تغییر نقش کاربر
           </VTooltip>
         </VChip>
