@@ -22,9 +22,9 @@ const isRenderingRoleDialog = ref<boolean>(false)
 const usersList = ref<null | IUser[]>(null)
 const totalCount = ref<null | string | number | undefined>(null)
 const tempUser = ref<IUser>()
-const selectedUserRole = ref<'User' | 'Admin' | 'SuperAdmin' | null>(null)
+const selectedUserRole = ref<'User' | 'Admin' | null>(null)
 const authStore = useAuthStore()
-const manageableRoles = ['User', 'Admin', 'SuperAdmin'] as const
+const manageableRoles = ['User', 'Admin'] as const
 const roleOptions = [
   {
     title: 'کاربر عادی',
@@ -33,10 +33,6 @@ const roleOptions = [
   {
     title: 'ادمین',
     value: 'Admin',
-  },
-  {
-    title: 'سوپر ادمین',
-    value: 'SuperAdmin',
   },
 ]
 
@@ -79,10 +75,10 @@ function renderUpdateDialog(item: IUser) {
   isRenderingUpdateDialog.value = true
 }
 
-function extractCurrentManageableRole(user: IUser): 'User' | 'Admin' | 'SuperAdmin' | null {
-  const role = user.roles.find((item) => manageableRoles.includes(item.name as 'User' | 'Admin' | 'SuperAdmin'))
+function extractCurrentManageableRole(user: IUser): 'User' | 'Admin' | null {
+  const role = user.roles.find((item) => manageableRoles.includes(item.name as 'User' | 'Admin'))
 
-  return (role?.name as 'User' | 'Admin' | 'SuperAdmin') || null
+  return (role?.name as 'User' | 'Admin') || null
 }
 
 function renderRoleDialog(item: IUser) {
@@ -108,7 +104,7 @@ async function updateUserRole() {
   }
 
   const currentRoles = tempUser.value.roles.map((role) => role.name)
-  const rolesToRemove = currentRoles.filter((role) => manageableRoles.includes(role as 'User' | 'Admin' | 'SuperAdmin') && role !== selectedUserRole.value)
+  const rolesToRemove = currentRoles.filter((role) => manageableRoles.includes(role as 'User' | 'Admin') && role !== selectedUserRole.value)
 
   try {
     spinner.showSpinner()
