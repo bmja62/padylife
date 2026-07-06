@@ -31,7 +31,7 @@ export interface ILoginResponse {
 
 export interface IUpdateUserRolePayload {
   userId: number
-  role: string
+  roles: string[]
 }
 
 export interface IRole {
@@ -153,10 +153,12 @@ export default class UserService {
 
 
   addRoleToUser(payload: IUpdateUserRolePayload): Promise<AxiosResponse<IApiResult>> {
-    return this.axiosInstance.patch('/Users/AddRoleToUser', payload)
+    return this.axiosInstance.post('/Users/AddRoleToUser', payload)
   }
 
   revokeRoleFromUser(payload: IUpdateUserRolePayload): Promise<AxiosResponse<IApiResult>> {
-    return this.axiosInstance.patch('/Users/RemoveRoleFromUser', payload)
+    return this.axiosInstance.delete('/Users/RemoveFromRolesUser', {
+      data: payload,
+    })
   }
 }

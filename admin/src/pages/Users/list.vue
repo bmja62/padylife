@@ -22,10 +22,14 @@ const isRenderingRoleDialog = ref<boolean>(false)
 const usersList = ref<null | IUser[]>(null)
 const totalCount = ref<null | string | number | undefined>(null)
 const tempUser = ref<IUser>()
-const selectedUserRole = ref<'Admin' | 'SuperAdmin' | null>(null)
+const selectedUserRole = ref<'User' | 'Admin' | 'SuperAdmin' | null>(null)
 const authStore = useAuthStore()
-const manageableRoles = ['Admin', 'SuperAdmin'] as const
+const manageableRoles = ['User', 'Admin', 'SuperAdmin'] as const
 const roleOptions = [
+  {
+    title: 'کاربر عادی',
+    value: 'User',
+  },
   {
     title: 'ادمین',
     value: 'Admin',
@@ -75,10 +79,10 @@ function renderUpdateDialog(item: IUser) {
   isRenderingUpdateDialog.value = true
 }
 
-function extractCurrentManageableRole(user: IUser): 'Admin' | 'SuperAdmin' | null {
-  const role = user.roles.find((item) => manageableRoles.includes(item.name as 'Admin' | 'SuperAdmin'))
+function extractCurrentManageableRole(user: IUser): 'User' | 'Admin' | 'SuperAdmin' | null {
+  const role = user.roles.find((item) => manageableRoles.includes(item.name as 'User' | 'Admin' | 'SuperAdmin'))
 
-  return (role?.name as 'Admin' | 'SuperAdmin') || null
+  return (role?.name as 'User' | 'Admin' | 'SuperAdmin') || null
 }
 
 function renderRoleDialog(item: IUser) {
@@ -100,11 +104,11 @@ async function updateUserRole() {
 
   const rolePayload: IUpdateUserRolePayload = {
     userId: tempUser.value.id,
-    role: selectedUserRole.value,
+    roles: [selectedUserRole.value],
   }
 
   const currentRoles = tempUser.value.roles.map((role) => role.name)
-  const rolesToRemove = currentRoles.filter((role) => manageableRoles.includes(role as 'Admin' | 'SuperAdmin') && role !== selectedUserRole.value)
+  const rolesToRemove = currentRoles.filter((role) => manageableRoles.includes(role as 'User' | 'Admin' | 'SuperAdmin') && role !== selectedUserRole.value)
 
   try {
     spinner.showSpinner()
@@ -112,7 +116,7 @@ async function updateUserRole() {
     for (const roleName of rolesToRemove) {
       const revokeResponse = await $api?.users.revokeRoleFromUser({
         userId: tempUser.value.id,
-        role: roleName,
+        roles: [roleName],
       })
 
       if (!revokeResponse?.data.isSuccess) {
