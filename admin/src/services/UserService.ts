@@ -34,6 +34,11 @@ export interface IUpdateUserRolePayload {
   roles: string[]
 }
 
+export interface IGetAllRolesFilters {
+  pageNumber: number
+  count: number
+}
+
 export interface IRole {
   name: string,
   description: string,
@@ -103,6 +108,13 @@ export default class UserService {
   getUserById(id: number): Promise<AxiosResponse<IApiResult<IGlobalGridResult<IUser[]>>>> {
     return this.axiosInstance.get(`Users/Get/${id}`)
   }
+
+  getAllRoles(payload: IGetAllRolesFilters): Promise<AxiosResponse<IApiResult<IGlobalGridResult<IRole[]>>>> {
+    return this.axiosInstance.get('/Users/GetAllRoles', {
+      params: payload,
+    })
+  }
+
   createANewUser(payload: IUserCreatePayload): Promise<AxiosResponse<IApiResult>> {
     return this.axiosInstance.post('/User/CreateUserByAdmin', payload)
   }

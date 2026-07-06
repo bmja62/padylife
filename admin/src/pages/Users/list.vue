@@ -10,6 +10,7 @@ import {useAuthStore} from "@/stores/auth"
 
 onMounted(() => {
   getUsers()
+  getAllRoles()
 })
 
 const $api = inject<IApiProvider>('$api')
@@ -22,10 +23,9 @@ const isRenderingRoleDialog = ref<boolean>(false)
 const usersList = ref<null | IUser[]>(null)
 const totalCount = ref<null | string | number | undefined>(null)
 const tempUser = ref<IUser>()
-const selectedUserRole = ref<'User' | 'Admin' | null>(null)
+const selectedUserRole = ref<string | null>(null)
 const authStore = useAuthStore()
-const manageableRoles = ['User', 'Admin'] as const
-const roleOptions = [
+const roleOptions = ref<Array<{ title: string, value: string }>>([
   {
     title: 'کاربر عادی',
     value: 'User',
@@ -34,7 +34,11 @@ const roleOptions = [
     title: 'ادمین',
     value: 'Admin',
   },
-]
+  {
+    title: 'متخصص',
+    value: 'Specialist',
+  },
+])
 
 const tableHeaders: ITableHeaders = [
   {title: 'شناسه', key: 'id'},
@@ -75,10 +79,11 @@ function renderUpdateDialog(item: IUser) {
   isRenderingUpdateDialog.value = true
 }
 
-function extractCurrentManageableRole(user: IUser): 'User' | 'Admin' | null {
-  const role = user.roles.find((item) => manageableRoles.includes(item.name as 'User' | 'Admin'))
+function extractCurrentManageableRole(user: IUser): string | null {
+  const manageableRoles = roleOptions.value.map(item => item.value)
+  const role = user.roles.find((item) => manageableRoles.includes(item.name))
 
-  return (role?.name as 'User' | 'Admin') || null
+  return role?.name || null
 }
 
 function renderRoleDialog(item: IUser) {
@@ -104,7 +109,8 @@ async function updateUserRole() {
   }
 
   const currentRoles = tempUser.value.roles.map((role) => role.name)
-  const rolesToRemove = currentRoles.filter((role) => manageableRoles.includes(role as 'User' | 'Admin') && role !== selectedUserRole.value)
+  const manageableRoles = roleOptions.value.map(item => item.value)
+  const rolesToRemove = currentRoles.filter((role) => manageableRoles.includes(role) && role !== selectedUserRole.value)
 
   try {
     spinner.showSpinner()
@@ -140,6 +146,25 @@ async function updateUserRole() {
       console.error(error)
   } finally {
     spinner.hideSpinner()
+  }
+}
+
+async function getAllRoles() {
+  try {
+    const response = await $api?.users.getAllRoles({
+      pageNumber: 1,
+      count: 100,
+    })
+
+    const roles = response?.data?.data?.data || []
+    if (roles.length) {
+      roleOptions.value = roles.map(role => ({
+        title: role.description || role.name,
+        value: role.name,
+      }))
+    }
+  } catch (error) {
+    console.error(error)
   }
 }
 
