@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import {inject, onMounted, ref} from 'vue'
+import {isAxiosError} from 'axios'
+import {computed, inject, onMounted, ref} from 'vue'
 import type {ITableHeaders} from '@/models/ITableHeader'
 import type {IApiProvider} from '@/models/IApiProvider'
-import type {IGetUserFilters, IUser} from '@/services/UserService'
+import type {IGetUserFilters, IUpdateUserRolePayload, IUser} from '@/services/UserService'
 import {useSpinner} from '@/composables/spinner'
+import {useAlerts} from '@/composables/alert'
 import {useAuthStore} from "@/stores/auth";
 
 // LifeCycles
@@ -14,13 +16,33 @@ onMounted(() => {
 // Variables
 const $api = inject<IApiProvider>('$api')
 const spinner = useSpinner()
+const alert = useAlerts()
 const isRenderingCreateDialog = ref<boolean>(false)
 const isRenderingUpdateDialog = ref<boolean>(false)
 const isRenderingDeleteDialog = ref<boolean>(false)
+const isRenderingRoleDialog = ref<boolean>(false)
 const usersList = ref<null | IUser[]>(null)
 const totalCount = ref<null | string | number | undefined>(null)
 const tempUser = ref<IUser>()
+const selectedUserRole = ref<'Admin' | 'SuperAdmin' | null>(null)
 const authStore = useAuthStore()
+const manageableRoles = ['Admin', 'SuperAdmin'] as const
+const roleOptions = [
+  {
+    title: 'ادمین',
+    value: 'Admin',
+  },
+  {
+    title: 'سوپر ادمین',
+    value: 'SuperAdmin',
+  },
+]
+const isRoleChangeEnabled = computed<boolean>(() => {
+  const mode = (import.meta.env.MODE || '').toLowerCase()
+  const apiBaseUrl = (import.meta.env.VITE_BASE_API_URL || '').toLowerCase()
+
+  return mode === 'staging' || apiBaseUrl.includes('staging')
+})
 const tableHeaders: ITableHeaders = [
   {title: 'شناسه', key: 'id'},
   {
@@ -61,12 +83,75 @@ function renderUpdateDialog(item: IUser) {
   isRenderingUpdateDialog.value = true
 }
 
-function setRole(role: IRole) {
-  usersFilters.value.role = role.name
+function extractCurrentManageableRole(user: IUser): 'Admin' | 'SuperAdmin' | null {
+  const role = user.roles.find((item) => manageableRoles.includes(item.name as 'Admin' | 'SuperAdmin'))
+
+  return (role?.name as 'Admin' | 'SuperAdmin') || null
 }
 
-function clearRole(): void {
-  usersFilters.value.role = undefined
+function renderRoleDialog(item: IUser) {
+  if (!isRoleChangeEnabled.value)
+    return
+
+  tempUser.value = JSON.parse(JSON.stringify(item))
+  selectedUserRole.value = extractCurrentManageableRole(item)
+  isRenderingRoleDialog.value = true
+}
+
+function closeRoleDialog() {
+  isRenderingRoleDialog.value = false
+  selectedUserRole.value = null
+}
+
+async function updateUserRole() {
+  if (!tempUser.value || !selectedUserRole.value) {
+    alert.error('لطفا نقش کاربر را انتخاب کنید')
+    return
+  }
+
+  const rolePayload: IUpdateUserRolePayload = {
+    userId: tempUser.value.id,
+    role: selectedUserRole.value,
+  }
+
+  const currentRoles = tempUser.value.roles.map((role) => role.name)
+  const rolesToRemove = currentRoles.filter((role) => manageableRoles.includes(role as 'Admin' | 'SuperAdmin') && role !== selectedUserRole.value)
+
+  try {
+    spinner.showSpinner()
+
+    for (const roleName of rolesToRemove) {
+      const revokeResponse = await $api?.users.revokeRoleFromUser({
+        userId: tempUser.value.id,
+        role: roleName,
+      })
+
+      if (!revokeResponse?.data.isSuccess) {
+        alert.error(revokeResponse?.data.message || 'حذف نقش قبلی انجام نشد')
+        return
+      }
+    }
+
+    if (!currentRoles.includes(selectedUserRole.value)) {
+      const addRoleResponse = await $api?.users.addRoleToUser(rolePayload)
+
+      if (!addRoleResponse?.data.isSuccess) {
+        alert.error(addRoleResponse?.data.message || 'ثبت نقش جدید انجام نشد')
+        return
+      }
+    }
+
+    alert.success('نقش کاربر با موفقیت تغییر کرد')
+    closeRoleDialog()
+    await getUsers()
+  } catch (error: unknown) {
+    if (isAxiosError(error))
+      alert.error(error?.response?.data?.message || 'مشکلی پیش آمد، لطفا دوباره امتحان کنید')
+    else
+      console.error(error)
+  } finally {
+    spinner.hideSpinner()
+  }
 }
 
 async function getUsers() {
@@ -182,9 +267,19 @@ async function resetFiltersAndGetUsers() {
           size="small"
           label
           color="primary"
-          class="ma-1"
+          :class="[
+            'ma-1',
+            isRoleChangeEnabled && $can('manage', 'all') ? 'cursor-pointer' : '',
+          ]"
+          @click="isRoleChangeEnabled && $can('manage', 'all') ? renderRoleDialog(data.item) : null"
         >
           {{ role.description }}
+          <VTooltip
+            v-if="isRoleChangeEnabled && $can('manage', 'all')"
+            activator="parent"
+          >
+            تغییر نقش کاربر
+          </VTooltip>
         </VChip>
       </template>
     </CustomTable>
@@ -199,5 +294,27 @@ async function resetFiltersAndGetUsers() {
       :default-user="tempUser"
       @refetch="getUsers"
     />
+
+    <CustomUpdateDialog
+      v-model:dialogState="isRenderingRoleDialog"
+      :title="`تغییر نقش کاربر: ${tempUser?.fullName || ''}`"
+      action-text="ثبت تغییر نقش"
+      @update:dialog-state="closeRoleDialog"
+      @update="updateUserRole"
+    >
+      <VCol cols="12">
+        <VSelect
+          v-model="selectedUserRole"
+          :items="roleOptions"
+          item-title="title"
+          item-value="value"
+          label="نقش کاربر"
+          variant="outlined"
+          density="compact"
+          color="success"
+          hide-details
+        />
+      </VCol>
+    </CustomUpdateDialog>
   </PageWrapper>
 </template>
