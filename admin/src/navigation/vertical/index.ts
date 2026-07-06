@@ -2,13 +2,6 @@ import type {VerticalNavItems} from '@/@layouts/types'
 
 export default [
   {
-    title: 'Menu:Home',
-    to: {name: 'index'},
-    icon: {icon: 'tabler-smart-home'},
-    action: 'manage',
-    subject: 'specialist',
-  },
-  {
     title: 'Menu:Dashboard',
     to: {name: 'dashboard-detail'},
     icon: {icon: 'tabler-dashboard'},

@@ -71,8 +71,8 @@ async function login() {
         })
         localStorage.setItem('userAbilities', JSON.stringify(roleAbilities))
         ability.update(roleAbilities)
-        // Redirect to `to` query if exist or redirect to index route
-        router.replace(route.query.to ? String(route.query.to) : '/')
+        // Redirect to requested route, otherwise land on dashboard
+        router.replace(route.query.to ? String(route.query.to) : { name: 'dashboard-detail' })
       }
 
     } else {
