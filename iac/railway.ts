@@ -5,19 +5,15 @@ export default defineRailway((ctx) => {
   const branch = "main";
   const watchPattern = prod ? ["/__never_trigger_deploy__/**"] : undefined;
 
-  const postgresProd = postgres("Postgres-Production");
-  const postgresStaging = postgres("Postgres-Staging");
-  const postgresService = prod ? postgresProd : postgresStaging;
-  
-  const postgresResourceName = postgresService.name;
-  const postgresVarRef = (key: string) => `\$\{\{${postgresResourceName}.${key}\}\}`;
-  const postgresNpgsqlConnectionString = `Host=${postgresVarRef("PGHOST")};Port=${postgresVarRef("PGPORT")};Database=${postgresVarRef("PGDATABASE")};Username=${postgresVarRef("PGUSER")};Password=${postgresVarRef("PGPASSWORD")};`;
-  
   const postgresVolumeProd = volume("postgres-volume-production", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 1000 });
   const postgresVolumeStaging = volume("postgres-volume-staging", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 100 });
   const postgresVolume = prod ? postgresVolumeProd : postgresVolumeStaging;
-  const postgresWithVolume = {
-    ...postgresService,
+
+  const postgresService = {
+    ...(prod ? postgres("Postgres-Production") : postgres("Postgres-Staging")),
+    deploy: {
+      sleepApplication: true,
+    },
     volumeAttachments: {
       data: {
         volume: postgresVolume.address,
@@ -25,6 +21,9 @@ export default defineRailway((ctx) => {
       },
     },
   };
+
+  const postgresVarRef = (key: string) => `\$\{\{${postgresService.name}.${key}\}\}`;
+  const postgresNpgsqlConnectionString = `Host=${postgresVarRef("PGHOST")};Port=${postgresVarRef("PGPORT")};Database=${postgresVarRef("PGDATABASE")};Username=${postgresVarRef("PGUSER")};Password=${postgresVarRef("PGPASSWORD")};`;
  
   
   const api = service("api", {
@@ -41,7 +40,9 @@ export default defineRailway((ctx) => {
     },
     healthcheck: "/swagger/index.html",
     healthcheckTimeout: 300,
-    sleepApplication: true,
+    deploy: {
+      sleepApplication: true,
+    },
     replicas: 1,
   });
 
@@ -54,7 +55,9 @@ export default defineRailway((ctx) => {
       dockerfilePath: "app/Dockerfile",
       watchPatterns: watchPattern,
     },
-    sleepApplication: true,
+    deploy: {
+      sleepApplication: true,
+    },
     replicas: 1,
   });
   const admin = service("admin", {
@@ -66,7 +69,9 @@ export default defineRailway((ctx) => {
       dockerfilePath: "admin/Dockerfile",
       watchPatterns: watchPattern,
     },
-    sleepApplication: true,
+    deploy: {
+      sleepApplication: true,
+    },
     replicas: 1,
   });
 
@@ -79,9 +84,11 @@ export default defineRailway((ctx) => {
       dockerfilePath: "www/Dockerfile",
       watchPatterns: watchPattern,
     },
-    sleepApplication: true,
+    deploy: {
+      sleepApplication: true,
+    },
     replicas: 1,
   });
 
-  return project("padylife", {resources: [api, app, admin, postgresWithVolume, www, postgresVolume]});
+  return project("padylife", {resources: [api, app, admin, postgresService, www, postgresVolume]});
 });
