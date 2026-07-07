@@ -12,7 +12,7 @@ export default defineRailway((ctx) => {
   const postgresResourceName = postgresService.name;
   const postgresVarRef = (key: string) => `\$\{\{${postgresResourceName}.${key}\}\}`;
   const postgresNpgsqlConnectionString = `Host=${postgresVarRef("PGHOST")};Port=${postgresVarRef("PGPORT")};Database=${postgresVarRef("PGDATABASE")};Username=${postgresVarRef("PGUSER")};Password=${postgresVarRef("PGPASSWORD")};`;
-
+  
   const postgresVolumeProd = volume("postgres-volume-production", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 1000 });
   const postgresVolumeStaging = volume("postgres-volume-staging", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 100 });
   const postgresVolume = prod ? postgresVolumeProd : postgresVolumeStaging;
@@ -32,6 +32,7 @@ export default defineRailway((ctx) => {
     },
     healthcheck: "/swagger/index.html",
     healthcheckTimeout: 300,
+    sleepApplication: true,
     replicas: 1,
   });
 
@@ -44,6 +45,7 @@ export default defineRailway((ctx) => {
       dockerfilePath: "app/Dockerfile",
       watchPatterns: watchPattern,
     },
+    sleepApplication: true,
     replicas: 1,
   });
   const admin = service("admin", {
@@ -55,6 +57,7 @@ export default defineRailway((ctx) => {
       dockerfilePath: "admin/Dockerfile",
       watchPatterns: watchPattern,
     },
+    sleepApplication: true,
     replicas: 1,
   });
 
@@ -67,6 +70,7 @@ export default defineRailway((ctx) => {
       dockerfilePath: "www/Dockerfile",
       watchPatterns: watchPattern,
     },
+    sleepApplication: true,
     replicas: 1,
   });
 
