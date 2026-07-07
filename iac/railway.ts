@@ -22,16 +22,9 @@ export default defineRailway((ctx) => {
     },
   };
 
-  const postgresVarRef = (key: string) => `\$\{\{${postgresService.name}.${key}\}\}`;
-  const postgresNpgsqlConnectionString = `Host=${postgresVarRef("PGHOST")};Port=${postgresVarRef("PGPORT")};Database=${postgresVarRef("PGDATABASE")};Username=${postgresVarRef("PGUSER")};Password=${postgresVarRef("PGPASSWORD")};`;
- 
-  
   const api = service("api", {
     source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
     domains: [prod ? "api.padylife.ir" : "staging-api.padylife.ir"],
-    env: {
-      ConnectionStrings__PostgreSQL: postgresNpgsqlConnectionString,
-    },
     build: {
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
