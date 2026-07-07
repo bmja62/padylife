@@ -2,7 +2,7 @@ import { defineRailway, github, project, service, postgres } from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
-  const branch = "main";
+  const branch = prod ? "release" : "main";
   const watchPattern = prod ? ["/__never_trigger_deploy__/**"] : undefined;
 
   const postgresService = {
