@@ -1,24 +1,14 @@
-import { defineRailway, github, project, service, volume, postgres } from "railway/iac";
+import { defineRailway, github, project, service, postgres } from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
   const branch = "main";
   const watchPattern = prod ? ["/__never_trigger_deploy__/**"] : undefined;
 
-  const postgresVolumeProd = volume("postgres-volume-production", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 1000 });
-  const postgresVolumeStaging = volume("postgres-volume-staging", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 100 });
-  const postgresVolume = prod ? postgresVolumeProd : postgresVolumeStaging;
-
   const postgresService = {
     ...(prod ? postgres("Postgres-Production") : postgres("Postgres-Staging")),
     deploy: {
       sleepApplication: true,
-    },
-    volumeAttachments: {
-      data: {
-        volume: postgresVolume.address,
-        mountPath: "/var/lib/postgresql/data",
-      },
     },
   };
 
@@ -83,5 +73,5 @@ export default defineRailway((ctx) => {
     replicas: 1,
   });
 
-  return project("padylife", {resources: [api, app, admin, postgresService, www, postgresVolume]});
+  return project("padylife", {resources: [api, app, admin, postgresService, www]});
 });
