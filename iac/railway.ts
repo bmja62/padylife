@@ -16,6 +16,15 @@ export default defineRailway((ctx) => {
   const postgresVolumeProd = volume("postgres-volume-production", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 1000 });
   const postgresVolumeStaging = volume("postgres-volume-staging", { alerts: { usage: { "100": {}, "80": {}, "95": {} } }, allowOnlineResize: true, region: "sfo", sizeMB: 100 });
   const postgresVolume = prod ? postgresVolumeProd : postgresVolumeStaging;
+  const postgresWithVolume = {
+    ...postgresService,
+    volumeAttachments: {
+      data: {
+        volume: postgresVolume.address,
+        mountPath: "/var/lib/postgresql/data",
+      },
+    },
+  };
  
   
   const api = service("api", {
@@ -74,5 +83,5 @@ export default defineRailway((ctx) => {
     replicas: 1,
   });
 
-  return project("padylife", {resources: [api, app, admin, postgresService, www, postgresVolume]});
+  return project("padylife", {resources: [api, app, admin, postgresWithVolume, www, postgresVolume]});
 });
