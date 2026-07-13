@@ -3,18 +3,19 @@ import { defineRailway, github, project, service, postgres, volume } from "railw
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
   const branch = prod ? "release" : "main";
-  
-  const dbVolume = volume("database-data");
 
-  const db = postgres("database");
-  db.deploy = {
-    sleepApplication: true,
-  };
-  db.volumeMounts = {
-    "database-data": {
-      mountPath: "/var/lib/postgresql/data",
+  const dbVolume = volume("database-volume", {
+    sizeMB: 1024,
+  });
+
+  const db = postgres("database", {
+    deploy: {
+      sleepApplication: true,
     },
-  };
+    volumeMounts: {
+      "/var/lib/postgresql/data": dbVolume,
+    },
+  });
 
   const api = service("api", {
     source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
@@ -38,7 +39,7 @@ export default defineRailway((ctx) => {
   const app = service("app", {
     source: github("bmja62/padylife", { branch, rootDirectory: "app" }),
     domains: [prod ? "app.padylife.ir" : "staging-app.padylife.ir"],
-    build:{
+    build: {
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "app/Dockerfile",
@@ -51,7 +52,7 @@ export default defineRailway((ctx) => {
   const admin = service("admin", {
     source: github("bmja62/padylife", { branch, rootDirectory: "admin" }),
     domains: [prod ? "admin.padylife.ir" : "staging-admin.padylife.ir"],
-    build:{
+    build: {
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
       dockerfilePath: "admin/Dockerfile",
@@ -76,5 +77,5 @@ export default defineRailway((ctx) => {
     replicas: 1,
   });
 
-  return project("padylife", {resources: [api, app, admin, db, www, dbVolume]});
+  return project("padylife", { resources: [api, app, admin, www, db, dbVolume] });
 });
