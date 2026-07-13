@@ -1,13 +1,17 @@
-import { defineRailway, github, project, service, postgres } from "railway/iac";
+import { defineRailway, github, project, service, postgres, volume } from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
   const branch = prod ? "release" : "main";
-
-  const postgresService = {
-    ...(prod ? postgres("Postgres-Production") : postgres("Postgres-Staging")),
-    deploy: {
-      sleepApplication: true,
+  
+  const postgresVolume = volume("postgres-data");
+  const postgresService = postgres("Postgres");
+  postgresService.deploy = {
+    sleepApplication: true,
+  };
+  postgresService.volumeMounts = {
+    "postgres-data": {
+      mountPath: "/var/lib/postgresql/data",
     },
   };
 
@@ -68,5 +72,5 @@ export default defineRailway((ctx) => {
     replicas: 1,
   });
 
-  return project("padylife", {resources: [api, app, admin, postgresService, www]});
+  return project("padylife", {resources: [api, app, admin, postgresService, postgresVolume, www]});
 });
