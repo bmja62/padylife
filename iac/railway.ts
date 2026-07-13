@@ -1,15 +1,14 @@
-import { defineRailway, github, project, service, postgres, volume } from "railway/iac";
+import { defineRailway, github, project, service, postgres } from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
   const branch = prod ? "release" : "main";
   
-  const postgresVolume = volume("postgres-data");
-  const postgresService = postgres("Postgres");
-  postgresService.deploy = {
+  const db = postgres("database");
+  db.deploy = {
     sleepApplication: true,
   };
-  postgresService.volumeMounts = {
+  db.volumeMounts = {
     "postgres-data": {
       mountPath: "/var/lib/postgresql/data",
     },
@@ -19,7 +18,7 @@ export default defineRailway((ctx) => {
     source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
     domains: [prod ? "api.padylife.ir" : "staging-api.padylife.ir"],
     env: {
-      ConnectionStrings__PostgreSQL: "Host=${{postgres.PGHOST}};Port=${{postgres.PGPORT}};Database=${{postgres.PGDATABASE}};Username=${{postgres.PGUSER}};Password=${{postgres.PGPASSWORD}}",
+      ConnectionStrings__PostgreSQL: "Host=${{database.PGHOST}};Port=${{database.PGPORT}};Database=${{database.PGDATABASE}};Username=${{database.PGUSER}};Password=${{database.PGPASSWORD}}",
     },
     build: {
       buildEnvironment: "V3",
@@ -75,5 +74,5 @@ export default defineRailway((ctx) => {
     replicas: 1,
   });
 
-  return project("padylife", {resources: [api, app, admin, postgresService, postgresVolume, www]});
+  return project("padylife", {resources: [api, app, admin, db, www]});
 });
