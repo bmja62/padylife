@@ -18,6 +18,9 @@ export default defineRailway((ctx) => {
   const api = service("api", {
     source: github("bmja62/padylife", { branch, rootDirectory: "api" }),
     domains: [prod ? "api.padylife.ir" : "staging-api.padylife.ir"],
+    env: {
+      ConnectionStrings__PostgreSQL: "Host=${{postgres.PGHOST}};Port=${{postgres.PGPORT}};Database=${{postgres.PGDATABASE}};Username=${{postgres.PGUSER}};Password=${{postgres.PGPASSWORD}}",
+    },
     build: {
       buildEnvironment: "V3",
       builder: "DOCKERFILE",
