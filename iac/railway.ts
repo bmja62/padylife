@@ -1,14 +1,23 @@
-import { defineRailway, github, project, service, postgres, volume } from "railway/iac";
+import { defineRailway, github, preserve, project, service, postgres, volume } from "railway/iac";
 
 export default defineRailway((ctx) => {
   const prod = ctx.environment === "production";
   const branch = prod ? "release" : "main";
 
   const dbVolume = volume("database-volume", {
-    sizeMB: 1024,
+    sizeMB: 1024, 
+    alerts: {
+      usage: {
+        "100": {},
+        "80": {},
+        "95": {},
+      },
+    },
+    allowOnlineResize: true,
+    region: "sfo",
   });
 
-  const db = postgres("database", {
+const db = postgres("database", {
     deploy: {
       sleepApplication: true,
     },
